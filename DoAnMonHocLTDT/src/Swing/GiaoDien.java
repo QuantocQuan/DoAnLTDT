@@ -86,6 +86,7 @@ public class GiaoDien extends JFrame  {
 		loadGraph.setLayout(null);
 
 		textAreaMatrix = new JTextArea();
+		textAreaMatrix.setEditable(false);
 		textAreaMatrix.setBounds(10, 10, 304, 146);
 		loadGraph.add(textAreaMatrix);
 
