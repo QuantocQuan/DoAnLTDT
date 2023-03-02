@@ -1,5 +1,10 @@
 package Function;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Graph {
 	protected int soDinh;
 	protected int[][] mtk;
@@ -21,8 +26,21 @@ public class Graph {
 		
 	}
 	
-	public void loadGraph() {
-		
+	public void loadGraph(String pathFile) throws NumberFormatException, IOException {
+		File file = new File(pathFile);
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		this.soDinh = Integer.valueOf(br.readLine());
+		this.mtk = new int[soDinh][soDinh];
+		int dong = 0;
+		String line = "";
+		while ((line = br.readLine()) != null) {
+			String[] temp = line.split(" ");
+			for (int i = 0; i < temp.length; i++) {
+				mtk[dong][i] = Integer.valueOf(temp[i]);
+			}
+			dong++;
+		}
 	}
 	// show matrix in JtextArea
 	public String printMatrix() {
