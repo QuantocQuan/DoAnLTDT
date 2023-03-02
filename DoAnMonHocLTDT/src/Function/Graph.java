@@ -10,8 +10,8 @@ public class Graph {
 	protected int[][] mtk;
 	protected String path;
 	// use path file to load matrix and vertex from file .txt  
-	public Graph(String pathFile) {
-		
+	public Graph(String pathFile) throws NumberFormatException, IOException {
+		loadGraph(pathFile);
 	}
 	
 	public Graph(int[][] matrix) {
@@ -44,7 +44,15 @@ public class Graph {
 	}
 	// show matrix in JtextArea
 	public String printMatrix() {
-		return null;
+			StringBuilder str = new StringBuilder();
+			for (int i = 0; i < soDinh; i++) {
+				for (int j = 0; j < soDinh; j++) {
+					str.append(mtk[i][j]).append(" ");
+				}
+				str.append("\n");
+			}
+				return str.toString();
+			
 	}
 	/**
 	 * @param i vertex i
