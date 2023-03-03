@@ -61,7 +61,7 @@ public class GiaoDien extends JFrame  {
 	 * @throws NumberFormatException 
 	 */
 	public GiaoDien() throws NumberFormatException, IOException {
-		graph = new Graph("E:\\CodeLTDT\\src\\graph.txt");
+		graph = new Graph("C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT\\graph.txt");
 		GUI();
 		addAction();
 	}
