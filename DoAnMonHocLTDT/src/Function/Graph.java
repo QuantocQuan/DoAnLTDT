@@ -6,9 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Graph {
-	protected int soDinh;
-	protected int[][] mtk;
-	protected String path;
+	public int soDinh;
+	public int[][] mtk;
+	public String path;
 	// use path file to load matrix and vertex from file .txt  
 	public Graph(String pathFile) throws NumberFormatException, IOException {
 		loadGraph(pathFile);
@@ -55,21 +55,45 @@ public class Graph {
 			
 	}
 	/**
+	 * i la dinh dau, j la dinh cuoi
 	 * @param i vertex i
-	 * @param v vertex v
-	 * add edges connect i and v
+	 * @param j vertex j
+	 * add edges connect i and j
 	 */
-	public void addEdges(int i , int v) {
-		
+	public void addEdges(int i , int j) {
+		try {
+			if (i <= soDinh && j <= soDinh) {
+				// truong hop them khuyen
+				if (i == j) {
+					mtk[i][j] += 1;
+				} else {
+					mtk[i][j] += 1;
+				}
+			} 
+		} catch (Exception e) {
+			System.out.println("Vui long nhap lai");
+		}
 	}
 	/**
-	 * 
+	 * i la dinh dau, j la dinh cuoi
 	 * @param i vertex i
-	 * @param v vertex v
-	 * remove edges connect i and v
+	 * @param j vertex j
+	 * remove edges connect i and j
 	 */
-	public void removeEdges(int i , int v) {
-		
+	public void removeEdges(int i , int j) {
+		try {
+			if (i <= soDinh && j <= soDinh && mtk[i][j] > 0) {
+				// truong hop xoa khuyen
+				if (i == j) {
+					mtk[i][j] -= 1;
+				} else {
+					mtk[i][j] -= 1;
+				}
+			} 
+		} catch (Exception e) {
+			System.out.println("Vui long nhap lai");
+		}
+	
 	}
 	/**
 	 *  determine simple graph
