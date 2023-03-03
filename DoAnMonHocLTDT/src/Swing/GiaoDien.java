@@ -30,11 +30,11 @@ public class GiaoDien extends JFrame  {
 	public JPanel contentPane, loadGraph, jPanelFunc;
 	public JTextArea textAreaMatrix;
 	public ActionListener controller;
-	public JTextField textFieldaddFirst;
-	public JTextField textFieldRemoveFirst;
-	public JTextField textFieldaddLast;
-	public JTextField textFieldRemoveLast;
-	public Graph graph;
+	public JTextField textFieldFirst;
+	public JTextField textFieldLast;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+
 	
 	
 
@@ -61,7 +61,11 @@ public class GiaoDien extends JFrame  {
 	 * @throws NumberFormatException 
 	 */
 	public GiaoDien() throws NumberFormatException, IOException {
+<<<<<<< HEAD
 		graph = new Graph("C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT\\graph.txt");
+=======
+
+>>>>>>> 376ff3a9dfe1d781c4fe57b4422703fce6753c42
 		GUI();
 		addAction();
 	}
@@ -97,28 +101,18 @@ public class GiaoDien extends JFrame  {
 		btnDuyetDothi.setBounds(10, 72, 119, 21);
 		jPanelFunc.add(btnDuyetDothi);
 		
-		textFieldaddFirst = new JTextField();
-		textFieldaddFirst.setBounds(105, 103, 36, 21);
-		jPanelFunc.add(textFieldaddFirst);
-		textFieldaddFirst.setColumns(10);
+		textFieldFirst = new JTextField();
+		textFieldFirst.setBounds(161, 103, 22, 22);
+		jPanelFunc.add(textFieldFirst);
+		textFieldFirst.setColumns(10);
 		
-		textFieldRemoveFirst = new JTextField();
-		textFieldRemoveFirst.setBounds(105, 131, 36, 20);
-		jPanelFunc.add(textFieldRemoveFirst);
-		textFieldRemoveFirst.setColumns(10);
-		
-		textFieldaddLast = new JTextField();
-		textFieldaddLast.setBounds(151, 103, 36, 21);
-		jPanelFunc.add(textFieldaddLast);
-		textFieldaddLast.setColumns(10);
-		
-		textFieldRemoveLast = new JTextField();
-		textFieldRemoveLast.setBounds(151, 131, 36, 20);
-		jPanelFunc.add(textFieldRemoveLast);
-		textFieldRemoveLast.setColumns(10);
+		textFieldLast = new JTextField();
+		textFieldLast.setBounds(161, 135, 22, 21);
+		jPanelFunc.add(textFieldLast);
+		textFieldLast.setColumns(10);
 		
 		btnRemove = new JButton("RemoveEdge");
-		btnRemove.setBounds(10, 130, 91, 21);
+		btnRemove.setBounds(193, 135, 91, 21);
 		jPanelFunc.add(btnRemove);
 		
 		btnAdd = new JButton("AddEdge");
@@ -126,8 +120,16 @@ public class GiaoDien extends JFrame  {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnAdd.setBounds(10, 103, 85, 21);
+		btnAdd.setBounds(195, 103, 85, 21);
 		jPanelFunc.add(btnAdd);
+		
+		lblNewLabel = new JLabel("\u0110\u1EC9nh \u0111\u1EA7u:");
+		lblNewLabel.setBounds(85, 107, 65, 18);
+		jPanelFunc.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("\u0110\u1EC9nh cu\u1ED1i");
+		lblNewLabel_1.setBounds(86, 137, 65, 17);
+		jPanelFunc.add(lblNewLabel_1);
 
 		loadGraph = new JPanel();
 		contentPane.add(loadGraph);
@@ -153,35 +155,6 @@ public class GiaoDien extends JFrame  {
 		this.btnAdd.addActionListener(controller);
 		this.btnRemove.addActionListener(controller);
 	}
-	/**
-	 * phuong thuc in ra ma tran tren textArea
-	 */
-	public void addSetTextAreaMatrix() {
-		this.textAreaMatrix.setText(graph.printMatrix());
-	}
-	/**
-	 * phuong thuc them canh 
-	 */
-	public void addEdge() {
-		int first = Integer.valueOf(textFieldaddFirst.getText());
-		int last = Integer.valueOf(textFieldaddLast.getText());
-		if(first < 0 || first >= graph.soDinh || last < 0 || last >= graph.soDinh)  {
-			JOptionPane.showMessageDialog(btnRemove, "Ban chi co the nhap index dinh dau va dinh cuoi trong khoang quy dinh");
-		}
-		graph.addEdges(first, last);
-	}
-	/**
-	 * phuong thuc xoa canh
-	 */
-	public void removeEdge() {
-		int first = Integer.valueOf(textFieldRemoveFirst.getText());
-		int last = Integer.valueOf(textFieldRemoveLast.getText());
-		if(first < 0 || first >= graph.soDinh || last < 0 || last >= graph.soDinh)  {
-			JOptionPane.showMessageDialog(btnRemove, "Ban chi co the nhap index dinh dau va dinh cuoi trong khoang quy dinh");
-		}else if(graph.mtk[first][last] == 0 ) {
-			JOptionPane.showMessageDialog(btnRemove, "Canh can xoa khong ton tai");
-		}
-			
-		graph.removeEdges(first, last);
-	}
+	
+	
 }
