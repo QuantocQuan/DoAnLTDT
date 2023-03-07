@@ -25,7 +25,12 @@ public class Graph {
 	public Graph(int soDinh , int[][] matrix) {
 		
 	}
-	
+	/**
+	 * Load graph data from a .txt file, symbolized by edge friction
+	 * @param pathFile
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	public void loadGraph(String pathFile) throws NumberFormatException, IOException {
 		File file = new File(pathFile);
 		FileReader fr = new FileReader(file);
@@ -42,7 +47,10 @@ public class Graph {
 			dong++;
 		}
 	}
-	// show matrix in JtextArea
+	/**
+	 * Show matrix
+	 * @return matrix
+	 */
 	public String printMatrix() {
 			StringBuilder str = new StringBuilder();
 			for (int i = 0; i < soDinh; i++) {
@@ -55,16 +63,16 @@ public class Graph {
 			
 	}
 	/**
-	 * i la dinh dau, j la dinh cuoi
+	 * Add edges to graph
+	 * i is the first vertex, j is the last vertex of the edge to be added
 	 * @param i vertex i
 	 * @param j vertex j
 	 * add edges connect i and j
 	 */
 	public void addEdges(int i , int j) {
 		try {
-			if (i <= soDinh && j <= soDinh) {
-				// truong hop them khuyen
-				if (i == j) {
+			if (i < soDinh && j < soDinh) { // i and j must belong to the set of vertices of the graph
+				if (i == j) { //In case of adding tips, i and j coincide
 					mtk[i][j] += 1;
 				} else {
 					mtk[i][j] += 1;
@@ -75,16 +83,15 @@ public class Graph {
 		}
 	}
 	/**
-	 * i la dinh dau, j la dinh cuoi
+	 *remove edges to graph
+	 *i is the first vertex, j is the last vertex of the edge to be deleted
 	 * @param i vertex i
 	 * @param j vertex j
-	 * remove edges connect i and j
 	 */
 	public void removeEdges(int i , int j) {
 		try {
-			if (i <= soDinh && j <= soDinh && mtk[i][j] > 0) {
-				// truong hop xoa khuyen
-				if (i == j) {
+			if (i < soDinh && j < soDinh && mtk[i][j] > 0) { // i and j must belong to the set of vertices of the graph and the edge to be deleted must exist
+				if (i == j) { //In case of removing tips, i and j coincide
 					mtk[i][j] -= 1;
 				} else {
 					mtk[i][j] -= 1;
