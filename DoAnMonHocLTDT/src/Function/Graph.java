@@ -52,15 +52,27 @@ public class Graph {
 	 * @return matrix
 	 */
 	public String printMatrix() {
-			StringBuilder str = new StringBuilder();
-			for (int i = 0; i < soDinh; i++) {
-				for (int j = 0; j < soDinh; j++) {
-					str.append(mtk[i][j]).append(" ");
-				}
-				str.append("\n");
+//			StringBuilder str = new StringBuilder();
+//			for (int i = 0; i < soDinh; i++) {
+//				for (int j = 0; j < soDinh; j++) {
+//					str.append(mtk[i][j]).append(" ");
+//				}
+//				str.append("\n");
+//			}
+//				return str.toString();
+		String str = "  ";
+		for (int i = 0; i < mtk.length; i++) {
+			str += "   " + i ;
+		}
+		str += "\n";
+		for (int i = 0; i < mtk.length; i++) {
+			str += i + "   ";
+			for (int j = 0; j < mtk.length; j++) {
+				str +=  mtk[i][j] + "   ";
 			}
-				return str.toString();
-			
+			str += "\n";
+		}
+		return str;
 	}
 	/**
 	 * Add edges to graph

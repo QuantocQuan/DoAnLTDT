@@ -2,7 +2,6 @@ package Swing;
 
 import java.awt.EventQueue;
 
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,10 +22,11 @@ import javax.swing.JTextArea;
 import java.awt.FlowLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JFileChooser;
 
-public class GiaoDien extends JFrame  {
+public class View extends JFrame {
 
-	public JButton btnLoadGraph, btnDuyetDothi, btnCheckConnect, prinImage,btnRemove,btnAdd;
+	public JButton btnLoadGraph, btnDuyetDothi, btnCheckConnect, prinImage, btnRemove, btnAdd, btnSelectFile ;
 	public JPanel contentPane, loadGraph, jPanelFunc;
 	public JTextArea textAreaMatrix;
 	public ActionListener controller;
@@ -34,9 +34,9 @@ public class GiaoDien extends JFrame  {
 	public JTextField textFieldLast;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
-
-	
-	
+	public JFileChooser fileChooser;
+	public String pathFile;
+	public Graph graph ;
 
 	/**
 	 * Launch the application.
@@ -45,7 +45,7 @@ public class GiaoDien extends JFrame  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GiaoDien frame = new GiaoDien();
+					View frame = new View();
 
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -57,22 +57,20 @@ public class GiaoDien extends JFrame  {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
-	 * @throws NumberFormatException 
+	 * 
+	 * @throws IOException
+	 * @throws NumberFormatException
 	 */
-	public GiaoDien() throws NumberFormatException, IOException {
-<<<<<<< HEAD
-		graph = new Graph("C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT\\graph.txt");
-=======
+	public View() throws NumberFormatException, IOException {
 
->>>>>>> 376ff3a9dfe1d781c4fe57b4422703fce6753c42
+//		Graph graph = new Graph(pathFile);
 		GUI();
 		addAction();
 	}
 
 	public void GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 507, 379);
+		setBounds(100, 100, 565, 409);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -100,21 +98,21 @@ public class GiaoDien extends JFrame  {
 		btnDuyetDothi = new JButton("Graph browsing");
 		btnDuyetDothi.setBounds(10, 72, 119, 21);
 		jPanelFunc.add(btnDuyetDothi);
-		
+
 		textFieldFirst = new JTextField();
 		textFieldFirst.setBounds(161, 103, 22, 22);
 		jPanelFunc.add(textFieldFirst);
 		textFieldFirst.setColumns(10);
-		
+
 		textFieldLast = new JTextField();
 		textFieldLast.setBounds(161, 135, 22, 21);
 		jPanelFunc.add(textFieldLast);
 		textFieldLast.setColumns(10);
-		
+
 		btnRemove = new JButton("RemoveEdge");
 		btnRemove.setBounds(193, 135, 91, 21);
 		jPanelFunc.add(btnRemove);
-		
+
 		btnAdd = new JButton("AddEdge");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,11 +120,11 @@ public class GiaoDien extends JFrame  {
 		});
 		btnAdd.setBounds(195, 103, 85, 21);
 		jPanelFunc.add(btnAdd);
-		
+
 		lblNewLabel = new JLabel("\u0110\u1EC9nh \u0111\u1EA7u:");
 		lblNewLabel.setBounds(85, 107, 65, 18);
 		jPanelFunc.add(lblNewLabel);
-		
+
 		lblNewLabel_1 = new JLabel("\u0110\u1EC9nh cu\u1ED1i");
 		lblNewLabel_1.setBounds(86, 137, 65, 17);
 		jPanelFunc.add(lblNewLabel_1);
@@ -148,13 +146,22 @@ public class GiaoDien extends JFrame  {
 		btnLoadGraph.setBounds(344, 12, 118, 21);
 		loadGraph.add(btnLoadGraph);
 		
-	    controller = new Controller(this);
+		btnSelectFile = new JButton("Choose file");
+		btnSelectFile.setBounds(344, 52, 118, 21);
+		loadGraph.add(btnSelectFile);
+		
+		
+		
+		
+
+		controller = new Controller(this);
 	}
+
 	public void addAction() {
 		this.btnLoadGraph.addActionListener(controller);
 		this.btnAdd.addActionListener(controller);
 		this.btnRemove.addActionListener(controller);
+		this.btnCheckConnect.addActionListener(controller);
+		this.btnSelectFile.addActionListener(controller);
 	}
-	
-	
 }
