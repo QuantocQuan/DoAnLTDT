@@ -4,14 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Graph {
 	public int soDinh;
 	public int[][] mtk;
 	public String path;
+	boolean visited[]; 
 	// use path file to load matrix and vertex from file .txt  
 	public Graph(String pathFile) throws NumberFormatException, IOException {
 		loadGraph(pathFile);
+		visited = new boolean[soDinh];
 	}
 	
 	public Graph(int[][] matrix) {
@@ -132,21 +135,67 @@ public class Graph {
 		return false;
 	}
 	/**
+	 *trùng đỉnh
 	 * use DFS to scanning the graph
 	 * @param startVertex
 	 * @return
 	 */
 	public String DFSLinkkeList(int startVertex) {
-		return null ;
-	}
+		for (int i = 0; i < soDinh; i++) {
+			visited[i] = false;
+		}
+			StringBuffer result = new StringBuffer();
+				LinkedList<Integer> lk = new LinkedList<>();
+				lk.add(startVertex);
+				while(!lk.isEmpty()) {
+					int startCurrent = lk.getLast();
+					lk.removeLast();
+					if (visited[startCurrent] == false) {
+						visited[startCurrent] = true;
+					result =result.append(startCurrent + " ");
+					}
+					for (int i = soDinh - 1; i >= 0; i--) {
+						if (mtk[startCurrent][i] != 0 && visited[i] == false) {
+							lk.add(i);
+						}
+					}
+				}
+			
+				return  result.toString();
+		
+		}
+		
 	/**
+	 * trùng đỉnh
 	 * use BFS to scanning the graph
 	 * @param startVertex
 	 * @return
 	 */
 	public String BFSLinkedlist(int startVertex) {
-		return null ;
+		for (int i = 0; i < soDinh; i++) {
+			visited[i] = false;
+		}
+		StringBuffer result = new StringBuffer();
+		LinkedList<Integer> lk = new LinkedList<>();
+		lk.add(startVertex);
+		while (!lk.isEmpty()) {
+			int startCurrent = lk.getFirst();
+			lk.removeFirst();
+			if (visited[startCurrent] == false) {
+				visited[startCurrent] = true;
+				result = result.append(startCurrent + " ");
+			}
+			for (int i = 0; i < soDinh; i++) {
+				if (mtk[startCurrent][i] != 0 && visited[i] == false) {
+					lk.add(i);
+
+				}
+			}
+
+		}
+		return result.toString();
 	}
+	
 	/**
 	 * 
 	 * @param startVex
