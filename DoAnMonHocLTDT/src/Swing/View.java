@@ -5,11 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
 import Function.Graph;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -26,17 +28,24 @@ import javax.swing.JFileChooser;
 
 public class View extends JFrame {
 
-	public JButton btnLoadGraph, btnDuyetDothi, btnCheckConnect, prinImage, btnRemove, btnAdd, btnSelectFile ;
+	public JButton btnLoadGraph, btnCheckConnect, prinImage, btnRemove, btnAdd, btnSelectFile ;
 	public JPanel contentPane, loadGraph, jPanelFunc;
 	public JTextArea textAreaMatrix;
 	public ActionListener controller;
 	public JTextField textFieldFirst;
 	public JTextField textFieldLast;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
+	public JLabel lblDinhDau;
+	public JLabel lblNewLabel_1;
+	public JLabel lblDinhCuoi;
 	public JFileChooser fileChooser;
 	public String pathFile;
 	public Graph graph ;
+	public JRadioButton rdbtnDFS;
+	public JRadioButton rdbtnBFS;
+	public JTextField textFieldDinhChon;
+	public JLabel lblDuyetTheo;
+	public  JLabel lblDinhBatDauDuyet;
+	public JButton btnDuyetDothi;
 
 	/**
 	 * Launch the application.
@@ -81,12 +90,6 @@ public class View extends JFrame {
 		contentPane.add(jPanelFunc);
 		jPanelFunc.setLayout(null);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "DFS", "BFS" }));
-		comboBox.setSelectedIndex(0);
-		comboBox.setBounds(151, 72, 141, 21);
-		jPanelFunc.add(comboBox);
-
 		prinImage = new JButton("Show graph");
 		prinImage.setBounds(10, 10, 119, 21);
 		jPanelFunc.add(prinImage);
@@ -94,10 +97,35 @@ public class View extends JFrame {
 		btnCheckConnect = new JButton("Check connect");
 		btnCheckConnect.setBounds(10, 41, 141, 21);
 		jPanelFunc.add(btnCheckConnect);
-
-		btnDuyetDothi = new JButton("Graph browsing");
-		btnDuyetDothi.setBounds(10, 72, 119, 21);
-		jPanelFunc.add(btnDuyetDothi);
+		lblDinhCuoi = new JLabel("\u0110\u1EC9nh cu\u1ED1i");
+		lblDinhCuoi.setBounds(86, 137, 65, 17);
+		jPanelFunc.add(lblDinhCuoi);
+		
+		textFieldDinhChon = new JTextField();
+		textFieldDinhChon.setBounds(353, 26, 22, 19);
+		jPanelFunc.add(textFieldDinhChon);
+		textFieldDinhChon.setColumns(10);
+		
+		 rdbtnDFS = new JRadioButton("DFS");
+		rdbtnDFS.setBounds(308, 51, 53, 21);
+		jPanelFunc.add(rdbtnDFS);
+		
+		 rdbtnBFS = new JRadioButton("BFS");
+		rdbtnBFS.setBounds(363, 51, 53, 21);
+		jPanelFunc.add(rdbtnBFS);
+		
+		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup.add(rdbtnDFS);
+		btnGroup.add(rdbtnBFS);
+		
+		lblDuyetTheo = new JLabel("Duy\u1EC7t theo: ");
+		lblDuyetTheo.setBounds(219, 53, 83, 21);
+		jPanelFunc.add(lblDuyetTheo);
+		
+		 lblDinhBatDauDuyet = new JLabel("\u0110\u1EC9nh b\u1EAFt \u0111\u1EA7u duy\u1EC7t: ");
+		lblDinhBatDauDuyet.setBounds(217, 27, 126, 18);
+		jPanelFunc.add(lblDinhBatDauDuyet);
+		
 
 		textFieldFirst = new JTextField();
 		textFieldFirst.setBounds(161, 103, 22, 22);
@@ -121,9 +149,9 @@ public class View extends JFrame {
 		btnAdd.setBounds(195, 103, 85, 21);
 		jPanelFunc.add(btnAdd);
 
-		lblNewLabel = new JLabel("\u0110\u1EC9nh \u0111\u1EA7u:");
-		lblNewLabel.setBounds(85, 107, 65, 18);
-		jPanelFunc.add(lblNewLabel);
+		lblDinhDau = new JLabel("\u0110\u1EC9nh \u0111\u1EA7u:");
+		lblDinhDau.setBounds(85, 107, 65, 18);
+		jPanelFunc.add(lblDinhDau);
 
 		lblNewLabel_1 = new JLabel("\u0110\u1EC9nh cu\u1ED1i");
 		lblNewLabel_1.setBounds(86, 137, 65, 17);
@@ -142,6 +170,10 @@ public class View extends JFrame {
 		scrollBar.setBounds(297, 10, 17, 146);
 		loadGraph.add(scrollBar);
 
+		btnDuyetDothi = new JButton("Graph browsing");
+		btnDuyetDothi.setBounds(342, 75, 119, 21);
+		jPanelFunc.add(btnDuyetDothi);
+		
 		btnLoadGraph = new JButton("Update graph");
 		btnLoadGraph.setBounds(344, 12, 118, 21);
 		loadGraph.add(btnLoadGraph);
@@ -149,7 +181,7 @@ public class View extends JFrame {
 		btnSelectFile = new JButton("Choose file");
 		btnSelectFile.setBounds(344, 52, 118, 21);
 		loadGraph.add(btnSelectFile);
-		
+		 
 		
 		
 		
@@ -161,6 +193,7 @@ public class View extends JFrame {
 		this.btnLoadGraph.addActionListener(controller);
 		this.btnAdd.addActionListener(controller);
 		this.btnRemove.addActionListener(controller);
+		this.btnDuyetDothi.addActionListener(controller);
 		this.btnCheckConnect.addActionListener(controller);
 		this.btnSelectFile.addActionListener(controller);
 	}
