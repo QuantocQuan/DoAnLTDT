@@ -29,8 +29,8 @@ public class Controller implements ActionListener {
 		if (ac.equals("AddEdge")) {
 			int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 			int last = Integer.valueOf(giaoDien.textFieldLast.getText());
-			if(first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh)  {
-				JOptionPane.showMessageDialog(giaoDien.btnAdd, "Ban chi co the nhap index dinh dau va dinh cuoi trong khoang quy dinh");
+			if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
+				JOptionPane.showMessageDialog(giaoDien, "Bạn chỉ có thể nhập  0 <= đỉnh < " + giaoDien.graph.soDinh,	"Error", JOptionPane.ERROR_MESSAGE);
 			}
 			giaoDien.graph.addEdges(first, last);
 			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
@@ -38,18 +38,17 @@ public class Controller implements ActionListener {
 		if (ac.equals("RemoveEdge")) {
 			int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 			int last = Integer.valueOf(giaoDien.textFieldLast.getText());
-			if(first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh)  {
-				JOptionPane.showMessageDialog(giaoDien.btnRemove, "Ban chi co the nhap index dinh dau va dinh cuoi trong khoang quy dinh");
-			}else if(giaoDien.graph.mtk[first][last] == 0 ) {
-				JOptionPane.showMessageDialog(giaoDien.btnRemove, "Canh can xoa khong ton tai");
+			if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
+				JOptionPane.showMessageDialog(giaoDien, "Bạn chỉ có thể nhập  0 <= đỉnh < " + giaoDien.graph.soDinh,	"Error", JOptionPane.ERROR_MESSAGE);
+			} else if (giaoDien.graph.mtk[first][last] == 0) {
+				JOptionPane.showMessageDialog(giaoDien, "Cạnh cần xóa không tồn tại", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-				
+
 			giaoDien.graph.removeEdges(first, last);
 			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
-
 		}
 		if(ac.equals("Choose file")) {
-			giaoDien.fileChooser = new JFileChooser("C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT");
+			giaoDien.fileChooser = new JFileChooser("E:\\DoAnLTDT\\DoAnMonHocLTDT");
 			int returnVal = giaoDien.fileChooser.showOpenDialog(giaoDien);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 	            File file =giaoDien.fileChooser.getSelectedFile();
@@ -68,6 +67,17 @@ public class Controller implements ActionListener {
 	            
 	            
 	        } 
+		}
+		if (ac.equals("Graph browsing")) {
+			System.out.println("Ban vua nhan nut");
+			if (giaoDien.rdbtnDFS.isSelected()) {
+				int start = Integer.valueOf(giaoDien.textFieldDinhChon.getText());
+				JOptionPane.showMessageDialog(giaoDien, "Duyệt đồ thị theo DFS: " + giaoDien.graph.DFSLinkkeList(start));
+
+			} else if (giaoDien.rdbtnBFS.isSelected()) {
+				int start = Integer.valueOf(giaoDien.textFieldDinhChon.getText());
+				JOptionPane.showMessageDialog(giaoDien, "Duyệt đồ thị theo BFS: " + giaoDien.graph.BFSLinkedlist(start));
+			}
 		}
 	}
 
