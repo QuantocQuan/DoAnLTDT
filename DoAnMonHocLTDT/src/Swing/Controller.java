@@ -31,13 +31,13 @@ public class Controller implements ActionListener {
 				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
-					JOptionPane.showMessageDialog(giaoDien, "Bạn chỉ có thể nhập  0 <= đỉnh < " + giaoDien.graph.soDinh,
+					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex < " + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 				giaoDien.graph.addEdges(first, last);
 				this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 			} catch (NumberFormatException c) {
-				JOptionPane.showMessageDialog(giaoDien, "Không được để trống đỉnh đầu và đỉnh cuối cần thêm", "Error",
+				JOptionPane.showMessageDialog(giaoDien, "Do not leave the first vertex and the last vertex to be added", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
@@ -46,16 +46,16 @@ public class Controller implements ActionListener {
 				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
-					JOptionPane.showMessageDialog(giaoDien, "Bạn chỉ có thể nhập  0 <= đỉnh < " + giaoDien.graph.soDinh,
+					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex <" + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
 				} else if (giaoDien.graph.mtk[first][last] == 0) {
-					JOptionPane.showMessageDialog(giaoDien, "Cạnh cần xóa không tồn tại", "Error",
+					JOptionPane.showMessageDialog(giaoDien, "Edge to be deleted does not exist", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					giaoDien.graph.removeEdges(first, last);
 					this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 				}
 			} catch (NumberFormatException c) {
-				JOptionPane.showMessageDialog(giaoDien, "Không được để trống đỉnh đầu và đỉnh cuối cần xóa", "Error",
+				JOptionPane.showMessageDialog(giaoDien, "The first and last vertices to be deleted cannot be left blank", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 
@@ -83,22 +83,20 @@ public class Controller implements ActionListener {
 		if (ac.equals("Graph browsing")) {
 			int start;
 			String strStart = giaoDien.textFieldDinhChon.getText();
-			System.out.println("Ban vua nhan nut");
 			if (!strStart.equals(""))
 				start = Integer.valueOf(strStart);
 
 			else
 				start = 0;
-			System.out.printf("Đỉnh đầu là %d", start);
 			if (giaoDien.rdbtnDFS.isSelected()) {
 
 				JOptionPane.showMessageDialog(giaoDien,
-						"Duyệt đồ thị theo DFS: " + giaoDien.graph.DFSLinkkeList(start));
+						"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList(start));
 
 			} else if (giaoDien.rdbtnBFS.isSelected()) {
 
 				JOptionPane.showMessageDialog(giaoDien,
-						"Duyệt đồ thị theo BFS: " + giaoDien.graph.BFSLinkedlist(start));
+						 "Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist(start));
 			}
 		}
 	}
