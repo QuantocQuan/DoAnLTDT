@@ -140,12 +140,10 @@ public class View extends JFrame {
 		btnRemove = new JButton("RemoveEdge");
 		btnRemove.setBounds(193, 135, 91, 21);
 		jPanelFunc.add(btnRemove);
+		btnRemove.addActionListener(controller);
 
 		btnAdd = new JButton("AddEdge");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnAdd.addActionListener(controller);
 		btnAdd.setBounds(195, 103, 85, 21);
 		jPanelFunc.add(btnAdd);
 
@@ -163,11 +161,11 @@ public class View extends JFrame {
 
 		textAreaMatrix = new JTextArea();
 		textAreaMatrix.setEditable(false);
-		textAreaMatrix.setBounds(10, 10, 304, 146);
+		textAreaMatrix.setBounds(10, 10, 187, 146);
 		loadGraph.add(textAreaMatrix);
 
 		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(297, 10, 17, 146);
+		scrollBar.setBounds(207, 10, 17, 146);
 		loadGraph.add(scrollBar);
 
 		btnDuyetDothi = new JButton("Graph browsing");
