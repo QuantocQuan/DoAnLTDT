@@ -42,6 +42,7 @@ public class Controller implements ActionListener {
 			}
 		}
 		if (ac.equals("RemoveEdge")) {
+			System.out.println("ban vua nhan ");
 			try {
 				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
@@ -51,9 +52,9 @@ public class Controller implements ActionListener {
 				} else if (giaoDien.graph.mtk[first][last] == 0) {
 					JOptionPane.showMessageDialog(giaoDien, "Edge to be deleted does not exist", "Error",
 							JOptionPane.ERROR_MESSAGE);
-					giaoDien.graph.removeEdges(first, last);
-					this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 				}
+				giaoDien.graph.removeEdges(first, last);
+				this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 			} catch (NumberFormatException c) {
 				JOptionPane.showMessageDialog(giaoDien, "The first and last vertices to be deleted cannot be left blank", "Error",
 						JOptionPane.ERROR_MESSAGE);
