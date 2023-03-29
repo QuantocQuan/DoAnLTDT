@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class Graph {
 	public int soDinh;
@@ -45,7 +46,11 @@ public class Graph {
 		while ((line = br.readLine()) != null) {
 			String[] temp = line.split(" ");
 			for (int i = 0; i < temp.length; i++) {
-				mtk[dong][i] = Integer.valueOf(temp[i]);
+				try{mtk[dong][i] = Integer.valueOf(temp[i]);}
+				catch (Exception e) {
+					// TODO: handle exception
+					mtk[dong][i] = 0;
+				}
 			}
 			dong++;
 		}
@@ -55,23 +60,15 @@ public class Graph {
 	 * @return matrix
 	 */
 	public String printMatrix() {
-//			StringBuilder str = new StringBuilder();
-//			for (int i = 0; i < soDinh; i++) {
-//				for (int j = 0; j < soDinh; j++) {
-//					str.append(mtk[i][j]).append(" ");
-//				}
-//				str.append("\n");
-//			}
-//				return str.toString();
 		String str = "  ";
 		for (int i = 0; i < mtk.length; i++) {
-			str += "   " + i ;
+			str += "  " + i  ;
 		}
 		str += "\n";
 		for (int i = 0; i < mtk.length; i++) {
 			str += i + "   ";
 			for (int j = 0; j < mtk.length; j++) {
-				str +=  mtk[i][j] + "   ";
+				str +=  mtk[i][j] + "  ";
 			}
 			str += "\n";
 		}
@@ -84,19 +81,18 @@ public class Graph {
 	 * @param j vertex j
 	 * add edges connect i and j
 	 */
-	public void addEdges(int i , int j) {
-		try {
-			if (i < soDinh && j < soDinh) { // i and j must belong to the set of vertices of the graph
-				if (i == j) { //In case of adding tips, i and j coincide
-					mtk[i][j] += 1;
-				} else {
-					mtk[i][j] += 1;
+	public void addEdges(int i, int j, int value) {
+
+		if (i != j) {
+			if (mtk[i][j] == 0 || mtk[i][j]  > Integer.MAX_VALUE || mtk[i][j] < Integer.MIN_VALUE) {
+				if (i < soDinh && j < soDinh) { // i and j must belong to the set of vertices of the graph
+					mtk[i][j] = value;
 				}
-			} 
-		} catch (Exception e) {
-			System.out.println("Vui long nhap lai");
+			}
 		}
+
 	}
+	
 	/**
 	 *remove edges to graph
 	 *i is the first vertex, j is the last vertex of the edge to be deleted
@@ -106,11 +102,7 @@ public class Graph {
 	public void removeEdges(int i , int j) {
 		try {
 			if (i < soDinh && j < soDinh && mtk[i][j] > 0) { // i and j must belong to the set of vertices of the graph and the edge to be deleted must exist
-				if (i == j) { //In case of removing tips, i and j coincide
-					mtk[i][j] -= 1;
-				} else {
-					mtk[i][j] -= 1;
-				}
+					mtk[i][j] = 0;
 			} 
 		} catch (Exception e) {
 			System.out.println("Vui long nhap lai");
@@ -195,22 +187,103 @@ public class Graph {
 		}
 		return result.toString();
 	}
+	// TH1 nua bac ngoai cua dinh
+		public int degreeOutV(int v) {
+			int degree = 0;
+			for (int i = 0; i < mtk.length; i++) {
+				degree += mtk[v][i];
+			}
+			return degree;
+		}
+
+		// TH2 nua bac trong cua dinh
+		public int degreeInV(int v) {
+			int degree = 0;
+			for (int i = 0; i < this.mtk.length; i++) {
+				degree += this.mtk[i][v];
+			}
+			return degree;
+		}
+		public int DFSInt(int[][] mtk,int v) {
+			for (int i = 0; i < soDinh; i++) {
+				visited[i] = false;
+			}
+			int count = 0;
+			Stack<Integer> stack = new Stack<>();
+			stack.push(v);
+			while(!stack.isEmpty()) {
+				int start = stack.pop();
+				if(visited[start]== false) {
+					visited[start] = true;
+					count++;
+				
+				}
+				for (int i = soDinh-1; i >= 0; i--) {
+					if(mtk[start][i] > 0 && visited[i] == false) {
+						stack.push(i);
+					}
+				}
+			}
+			return count;
+			
+		}
+	//kiem tra do thi lien thong yeu
+		//ý tưởng : chuyển đổi từ đồ thị có hướng hiện tại thành đồ thị vô hướng, nếu đồ thị vô hướng mới chuyển đổi liên thông(dùng thuật toán dfs duyệt qua được tất cả các đỉnh)thì đồ thị có hướng ban đầu liên thông yếu.
+		public boolean checkConnectWeekly() {
+			int [][]copy = new int[soDinh][soDinh];
+		    for (int i = 0; i < copy.length; i++) {
+				for (int j = 0; j < copy.length; j++) {
+					copy[i][j] = mtk[i][j];
+				}
+			}
+		boolean re ;
+		int count = 0;	
+
+	    	 revereseGraph(copy); //chuyen do thi co huong hien tai thanh do thi vo huong
+	    	// printMatrix();
+	    	count = DFSInt(copy,0);//check xem do thi vo huong duoc chuyen tu do thi co huong co lien thong khong
+	    	 if(count == soDinh) { //neu so dinh duoc duyet het thi do thi lien thong, nguoc lai thi khong lien thong
+	    		 re = true;
+	    	 }else {
+	    		 re = false;
+	    	 }
+	    	 
+				return re;
+		}
+		public void revereseGraph(int[][] copy) {
+			int copy1[][] = this.mtk;
+			for (int i = 0; i < copy.length; i++) {
+				for (int j = 0; j < copy[0].length; j++) {
+					if(copy1[i][j] != 0 ) {
+						copy[i][j] =  copy1[i][j];
+						copy[j][i] = copy1[i][j];
+					}
+				}
+			}	
+		}
+		//kiểm tra đồ thị liên thông mạnh
+		//ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị, nếu duyệt được hết tất cả các đỉnh thì đồ thị liên thông mạnh.
+		public boolean checkConnectStrongly() {
+			boolean flag = true;
+			int count = 0;
+			count = DFSInt(this.mtk,0);
+			for (int i = 0; i < soDinh; i++) {
+				 int degreeIn = degreeInV(i);
+				 int degreeOut = degreeOutV(i);
+				 if(degreeIn < 1 || degreeOut < 1) {
+					 flag = false;
+				 }
+			}
+			if(count == soDinh && flag == true) {
+				return true;
+			}else {
+				return false;
+			}
+		}
 	
-	/**
-	 * 
-	 * @param startVex
-	 * @return true if this is connect graph
-	 */
-	public boolean checkConnectGraph(int startVex) {
-		return false ;
-	}
-	/**
-	 * 
-	 * @param startVex
-	 * @return show how many connect element and all vertex in a connect element
-	 */
-	public String findElementConnect(int startVex) {
-		return null ;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		Graph un1 = new Graph("E:\\CodeLTDT\\src\\test.txt");
+		System.out.println(un1.printMatrix());
 	}
 	
 }

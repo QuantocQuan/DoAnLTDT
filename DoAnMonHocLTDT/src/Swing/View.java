@@ -15,9 +15,12 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
@@ -25,17 +28,19 @@ import java.awt.FlowLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JFileChooser;
+import java.awt.ScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class View extends JFrame {
 
-	public JButton btnLoadGraph, btnCheckConnect, prinImage, btnRemove, btnAdd, btnSelectFile ;
+	public JButton btnLoadGraph, btnCheckConnect, btnRemove, btnAdd, btnSelectFile ;
 	public JPanel contentPane, loadGraph, jPanelFunc;
 	public JTextArea textAreaMatrix;
 	public ActionListener controller;
 	public JTextField textFieldFirst;
 	public JTextField textFieldLast;
 	public JLabel lblDinhDau;
-	public JLabel lblNewLabel_1;
 	public JLabel lblDinhCuoi;
 	public JFileChooser fileChooser;
 	public String pathFile;
@@ -46,6 +51,7 @@ public class View extends JFrame {
 	public JLabel lblDuyetTheo;
 	public  JLabel lblDinhBatDauDuyet;
 	public JButton btnDuyetDothi;
+	public JTextField textFieldValue;
 
 	/**
 	 * Launch the application.
@@ -62,6 +68,7 @@ public class View extends JFrame {
 				}
 			}
 		});
+		
 	}
 
 	/**
@@ -79,7 +86,7 @@ public class View extends JFrame {
 
 	public void GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 565, 409);
+		setBounds(100, 100, 574, 399);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -90,28 +97,24 @@ public class View extends JFrame {
 		contentPane.add(jPanelFunc);
 		jPanelFunc.setLayout(null);
 
-		prinImage = new JButton("Show graph");
-		prinImage.setBounds(10, 10, 119, 21);
-		jPanelFunc.add(prinImage);
-
 		btnCheckConnect = new JButton("Check connect");
-		btnCheckConnect.setBounds(10, 41, 141, 21);
+		btnCheckConnect.setBounds(379, 13, 134, 29);
 		jPanelFunc.add(btnCheckConnect);
-		lblDinhCuoi = new JLabel("\u0110\u1EC9nh cu\u1ED1i");
-		lblDinhCuoi.setBounds(86, 137, 65, 17);
+		lblDinhCuoi = new JLabel("Đỉnh cuối :");
+		lblDinhCuoi.setBounds(10, 91, 67, 18);
 		jPanelFunc.add(lblDinhCuoi);
 		
 		textFieldDinhChon = new JTextField();
-		textFieldDinhChon.setBounds(353, 26, 22, 19);
+		textFieldDinhChon.setBounds(379, 59, 44, 19);
 		jPanelFunc.add(textFieldDinhChon);
 		textFieldDinhChon.setColumns(10);
 		
 		 rdbtnDFS = new JRadioButton("DFS");
-		rdbtnDFS.setBounds(308, 51, 53, 21);
+		rdbtnDFS.setBounds(347, 94, 53, 21);
 		jPanelFunc.add(rdbtnDFS);
 		
 		 rdbtnBFS = new JRadioButton("BFS");
-		rdbtnBFS.setBounds(363, 51, 53, 21);
+		rdbtnBFS.setBounds(402, 94, 53, 21);
 		jPanelFunc.add(rdbtnBFS);
 		
 		ButtonGroup btnGroup = new ButtonGroup();
@@ -119,41 +122,32 @@ public class View extends JFrame {
 		btnGroup.add(rdbtnBFS);
 		
 		lblDuyetTheo = new JLabel("Duy\u1EC7t theo: ");
-		lblDuyetTheo.setBounds(219, 53, 83, 21);
+		lblDuyetTheo.setBounds(256, 94, 85, 21);
 		jPanelFunc.add(lblDuyetTheo);
 		
 		 lblDinhBatDauDuyet = new JLabel("\u0110\u1EC9nh b\u1EAFt \u0111\u1EA7u duy\u1EC7t: ");
-		lblDinhBatDauDuyet.setBounds(217, 27, 126, 18);
+		lblDinhBatDauDuyet.setBounds(256, 57, 126, 23);
 		jPanelFunc.add(lblDinhBatDauDuyet);
 		
 
 		textFieldFirst = new JTextField();
-		textFieldFirst.setBounds(161, 103, 22, 22);
+		textFieldFirst.setBounds(87, 58, 37, 22);
 		jPanelFunc.add(textFieldFirst);
 		textFieldFirst.setColumns(10);
 
 		textFieldLast = new JTextField();
-		textFieldLast.setBounds(161, 135, 22, 21);
+		textFieldLast.setBounds(87, 94, 37, 21);
 		jPanelFunc.add(textFieldLast);
 		textFieldLast.setColumns(10);
 
 		btnRemove = new JButton("RemoveEdge");
-		btnRemove.setBounds(193, 135, 91, 21);
+		btnRemove.setBounds(105, 149, 96, 21);
 		jPanelFunc.add(btnRemove);
 		btnRemove.addActionListener(controller);
 
-		btnAdd = new JButton("AddEdge");
-		btnAdd.addActionListener(controller);
-		btnAdd.setBounds(195, 103, 85, 21);
-		jPanelFunc.add(btnAdd);
-
 		lblDinhDau = new JLabel("\u0110\u1EC9nh \u0111\u1EA7u:");
-		lblDinhDau.setBounds(85, 107, 65, 18);
+		lblDinhDau.setBounds(10, 59, 76, 18);
 		jPanelFunc.add(lblDinhDau);
-
-		lblNewLabel_1 = new JLabel("\u0110\u1EC9nh cu\u1ED1i");
-		lblNewLabel_1.setBounds(86, 137, 65, 17);
-		jPanelFunc.add(lblNewLabel_1);
 
 		loadGraph = new JPanel();
 		contentPane.add(loadGraph);
@@ -161,24 +155,37 @@ public class View extends JFrame {
 
 		textAreaMatrix = new JTextArea();
 		textAreaMatrix.setEditable(false);
-		textAreaMatrix.setBounds(10, 10, 187, 146);
+		textAreaMatrix.setBounds(174, 10, 187, 146);
 		loadGraph.add(textAreaMatrix);
 
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(207, 10, 17, 146);
-		loadGraph.add(scrollBar);
-
 		btnDuyetDothi = new JButton("Graph browsing");
-		btnDuyetDothi.setBounds(342, 75, 119, 21);
+		btnDuyetDothi.setBounds(357, 121, 138, 21);
 		jPanelFunc.add(btnDuyetDothi);
 		
-		btnLoadGraph = new JButton("Update graph");
-		btnLoadGraph.setBounds(344, 12, 118, 21);
-		loadGraph.add(btnLoadGraph);
+		textFieldValue = new JTextField();
+		textFieldValue.setBounds(64, 123, 96, 19);
+		jPanelFunc.add(textFieldValue);
+		textFieldValue.setColumns(10);
+		
+		JLabel lblValue = new JLabel("Value :");
+		lblValue.setBounds(10, 120, 44, 21);
+		jPanelFunc.add(lblValue);
 		
 		btnSelectFile = new JButton("Choose file");
-		btnSelectFile.setBounds(344, 52, 118, 21);
-		loadGraph.add(btnSelectFile);
+		btnSelectFile.setBounds(36, 10, 124, 29);
+		jPanelFunc.add(btnSelectFile);
+		
+		btnLoadGraph = new JButton("Show graph");
+		btnLoadGraph.setBounds(218, 12, 112, 27);
+		jPanelFunc.add(btnLoadGraph);
+		
+				btnAdd = new JButton("AddEdge");
+				btnAdd.setBounds(10, 149, 85, 21);
+				jPanelFunc.add(btnAdd);
+				btnAdd.addActionListener(controller);
+		
+		
+		
 		 
 		
 		
