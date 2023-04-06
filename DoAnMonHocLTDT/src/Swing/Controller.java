@@ -30,7 +30,7 @@ public class Controller implements ActionListener {
 			try {
 				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
-				int value = Integer.valueOf(giaoDien.textFieldValue.getText());
+				String value = giaoDien.textFieldValue.getText();
 
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
 					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex < " + giaoDien.graph.soDinh,
@@ -58,7 +58,7 @@ public class Controller implements ActionListener {
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
 					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex <" + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
-				} else if (giaoDien.graph.mtk[first][last] == 0) {
+				} else if (giaoDien.graph.condition(giaoDien.graph.mtk, first, last)) {
 					JOptionPane.showMessageDialog(giaoDien, "Edge to be deleted does not exist", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
