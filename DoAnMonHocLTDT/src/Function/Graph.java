@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class Graph {
 	public int soDinh;
-	public int[][] mtk;
+	public String[][] mtk;
 	public String path;
 	boolean visited[]; 
 	// use path file to load matrix and vertex from file .txt  
@@ -18,17 +18,7 @@ public class Graph {
 		visited = new boolean[soDinh];
 	}
 	
-	public Graph(int[][] matrix) {
-		
-	}
-	
-	public Graph(int soDinh) {
-		
-	}
-	
-	public Graph(int soDinh , int[][] matrix) {
-		
-	}
+
 	/**
 	 * Load graph data from a .txt file, symbolized by edge friction
 	 * @param pathFile
@@ -40,17 +30,14 @@ public class Graph {
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
 		this.soDinh = Integer.valueOf(br.readLine());
-		this.mtk = new int[soDinh][soDinh];
+		this.mtk = new String[soDinh][soDinh];
 		int dong = 0;
 		String line = "";
 		while ((line = br.readLine()) != null) {
 			String[] temp = line.split(" ");
 			for (int i = 0; i < temp.length; i++) {
-				try{mtk[dong][i] = Integer.valueOf(temp[i]);}
-				catch (Exception e) {
-					// TODO: handle exception
-					mtk[dong][i] = 0;
-				}
+				mtk[dong][i] = temp[i];
+				
 			}
 			dong++;
 		}
@@ -68,7 +55,7 @@ public class Graph {
 		for (int i = 0; i < mtk.length; i++) {
 			str += i + "   ";
 			for (int j = 0; j < mtk.length; j++) {
-				str +=  mtk[i][j] + "  ";
+				str +=  mtk[i][j] + "       ";
 			}
 			str += "\n";
 		}
@@ -81,18 +68,18 @@ public class Graph {
 	 * @param j vertex j
 	 * add edges connect i and j
 	 */
-	public void addEdges(int i, int j, int value) {
+	public void addEdges(int i, int j, String value) {
 
 		if (i != j) {
-			if (mtk[i][j] == 0 || mtk[i][j]  > Integer.MAX_VALUE || mtk[i][j] < Integer.MIN_VALUE) {
+			if (mtk[i][j].equals("0")  || mtk[i][j].equals("-∞")|| mtk[i][j].equals("+∞")) {
 				if (i < soDinh && j < soDinh) { // i and j must belong to the set of vertices of the graph
-					mtk[i][j] = value;
+					mtk[i][j] = value ;
 				}
 			}
 		}
 
 	}
-	
+
 	/**
 	 *remove edges to graph
 	 *i is the first vertex, j is the last vertex of the edge to be deleted
@@ -100,14 +87,16 @@ public class Graph {
 	 * @param j vertex j
 	 */
 	public void removeEdges(int i , int j) {
-		try {
-			if (i < soDinh && j < soDinh && mtk[i][j] > 0) { // i and j must belong to the set of vertices of the graph and the edge to be deleted must exist
-					mtk[i][j] = 0;
-			} 
-		} catch (Exception e) {
-			System.out.println("Vui long nhap lai");
+			if (i < soDinh && j < soDinh && condition(mtk, i, j)) { // i and j must belong to the set of vertices of the graph and the edge to be deleted must exist	
+					mtk[i][j] = "0";
+			}
+
+	}
+	public boolean condition(String[][] matrix, int i, int j) {
+		if(matrix[i][j].equals("0") || matrix[i][j].equals("-∞") ||matrix[i][j].equals("∞") ) {
+			return false;
 		}
-	
+		return true;
 	}
 	/**
 	 *  determine simple graph
@@ -147,7 +136,7 @@ public class Graph {
 					result =result.append(startCurrent + " ");
 					}
 					for (int i = soDinh - 1; i >= 0; i--) {
-						if (mtk[startCurrent][i] != 0 && visited[i] == false) {
+						if (condition(mtk, startCurrent, i) && visited[i] == false) {
 							lk.add(i);
 						}
 					}
@@ -178,7 +167,7 @@ public class Graph {
 				result = result.append(startCurrent + " ");
 			}
 			for (int i = 0; i < soDinh; i++) {
-				if (mtk[startCurrent][i] != 0 && visited[i] == false) {
+				if (condition(mtk, startCurrent, i) && visited[i] == false) {
 					lk.add(i);
 
 				}
@@ -191,7 +180,7 @@ public class Graph {
 		public int degreeOutV(int v) {
 			int degree = 0;
 			for (int i = 0; i < mtk.length; i++) {
-				degree += mtk[v][i];
+				degree += Integer.parseInt(mtk[v][i]);
 			}
 			return degree;
 		}
@@ -200,11 +189,11 @@ public class Graph {
 		public int degreeInV(int v) {
 			int degree = 0;
 			for (int i = 0; i < this.mtk.length; i++) {
-				degree += this.mtk[i][v];
+				degree += Integer.parseInt(mtk[v][i]);
 			}
 			return degree;
 		}
-		public int DFSInt(int[][] mtk,int v) {
+		public int DFSInt(String[][] matrix,int v) {
 			for (int i = 0; i < soDinh; i++) {
 				visited[i] = false;
 			}
@@ -219,7 +208,7 @@ public class Graph {
 				
 				}
 				for (int i = soDinh-1; i >= 0; i--) {
-					if(mtk[start][i] > 0 && visited[i] == false) {
+					if(condition(matrix, start,i) && visited[i] == false) {
 						stack.push(i);
 					}
 				}
@@ -230,7 +219,7 @@ public class Graph {
 	//kiem tra do thi lien thong yeu
 		//ý tưởng : chuyển đổi từ đồ thị có hướng hiện tại thành đồ thị vô hướng, nếu đồ thị vô hướng mới chuyển đổi liên thông(dùng thuật toán dfs duyệt qua được tất cả các đỉnh)thì đồ thị có hướng ban đầu liên thông yếu.
 		public boolean checkConnectWeekly() {
-			int [][]copy = new int[soDinh][soDinh];
+			String [][]copy = new String[soDinh][soDinh];
 		    for (int i = 0; i < copy.length; i++) {
 				for (int j = 0; j < copy.length; j++) {
 					copy[i][j] = mtk[i][j];
@@ -250,11 +239,11 @@ public class Graph {
 	    	 
 				return re;
 		}
-		public void revereseGraph(int[][] copy) {
-			int copy1[][] = this.mtk;
+		public void revereseGraph(String[][] copy) {
+			String copy1[][] = this.mtk;
 			for (int i = 0; i < copy.length; i++) {
 				for (int j = 0; j < copy[0].length; j++) {
-					if(copy1[i][j] != 0 ) {
+					if(condition(copy1, i, j) ) {
 						copy[i][j] =  copy1[i][j];
 						copy[j][i] = copy1[i][j];
 					}
@@ -282,8 +271,11 @@ public class Graph {
 		}
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		Graph un1 = new Graph("E:\\CodeLTDT\\src\\test.txt");
+		Graph un1 = new Graph("E:\\CodeLTDT\\src\\DoThiCoHuong.txt");
 		System.out.println(un1.printMatrix());
+     	System.out.println(un1.DFSLinkkeList(0));
+	//	un1.removeEdges(0, 2);
+	// System.out.println(un1.printMatrix());
 	}
 	
 }
