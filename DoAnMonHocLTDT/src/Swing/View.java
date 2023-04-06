@@ -152,11 +152,14 @@ public class View extends JFrame {
 		loadGraph = new JPanel();
 		contentPane.add(loadGraph);
 		loadGraph.setLayout(null);
-
-		textAreaMatrix = new JTextArea();
-		textAreaMatrix.setEditable(false);
-		textAreaMatrix.setBounds(174, 10, 187, 146);
-		loadGraph.add(textAreaMatrix);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 10, 530, 156);
+		loadGraph.add(scrollPane);
+				
+						textAreaMatrix = new JTextArea();
+						scrollPane.setViewportView(textAreaMatrix);
+						textAreaMatrix.setEditable(false);
 
 		btnDuyetDothi = new JButton("Graph browsing");
 		btnDuyetDothi.setBounds(357, 121, 138, 21);

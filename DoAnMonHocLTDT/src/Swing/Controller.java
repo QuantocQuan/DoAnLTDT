@@ -72,7 +72,7 @@ public class Controller implements ActionListener {
 
 		}
 		if (ac.equals("Choose file")) {
-			giaoDien.fileChooser = new JFileChooser("E:\\DoAnLTDT\\DoAnMonHocLTDT");
+			giaoDien.fileChooser = new JFileChooser("C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT");
 			int returnVal = giaoDien.fileChooser.showOpenDialog(giaoDien);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = giaoDien.fileChooser.getSelectedFile();
