@@ -35,17 +35,17 @@ public class Controller implements ActionListener {
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
 					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex < " + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
-				}else if(first == last) {
-					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add khuyen",
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}else if(giaoDien.graph.mtk[first][last] != 0) {
-					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add canh song song",
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}else {
-				giaoDien.graph.addEdges(first, last, value);
-				this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+				} else if (first == last) {
+					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add khuyen", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (giaoDien.graph.mtk[first][last] != 0) {
+					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add canh song song", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					giaoDien.graph.addEdges(first, last, value);
+					this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 				}
-				
+
 			} catch (NumberFormatException c) {
 				JOptionPane.showMessageDialog(giaoDien, "Invalid value", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -59,12 +59,11 @@ public class Controller implements ActionListener {
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
 					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex <" + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
-				}else if(giaoDien.graph.mtk[first][last] == 0) {
-					JOptionPane.showMessageDialog(giaoDien, "Canh khong ton tai",
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}else {
-				giaoDien.graph.removeEdges(first, last);
-				this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+				} else if (giaoDien.graph.mtk[first][last] == 0) {
+					JOptionPane.showMessageDialog(giaoDien, "Canh khong ton tai", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					giaoDien.graph.removeEdges(first, last);
+					this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 				}
 			} catch (NumberFormatException c) {
 				JOptionPane.showMessageDialog(giaoDien,
@@ -74,7 +73,8 @@ public class Controller implements ActionListener {
 
 		}
 		if (ac.equals("Choose file")) {
-			giaoDien.fileChooser = new JFileChooser("C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT");
+			giaoDien.fileChooser = new JFileChooser(
+					"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT");
 			int returnVal = giaoDien.fileChooser.showOpenDialog(giaoDien);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = giaoDien.fileChooser.getSelectedFile();
@@ -100,19 +100,27 @@ public class Controller implements ActionListener {
 				start = Integer.valueOf(strStart);
 
 			else
-				start = 0;
+				start = -1;
 			if (giaoDien.rdbtnDFS.isSelected()) {
 
-				JOptionPane.showMessageDialog(giaoDien,
-						"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList(start));
+				if (start >= 0)
+					JOptionPane.showMessageDialog(giaoDien,
+							"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList(start));
+				else
+					JOptionPane.showMessageDialog(giaoDien,
+							"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList());
 
 			} else if (giaoDien.rdbtnBFS.isSelected()) {
-
-				JOptionPane.showMessageDialog(giaoDien,
-						"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist(start));
+				if (start >= 0)
+					JOptionPane.showMessageDialog(giaoDien,
+							"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist(start));
+				else
+					JOptionPane.showMessageDialog(giaoDien,
+							"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist());
 			}
-		}if(ac.equals("Check connect")) { 
-			JOptionPane.showMessageDialog(giaoDien,giaoDien.graph.checkConnect());
+		}
+		if (ac.equals("Check connect")) {
+			JOptionPane.showMessageDialog(giaoDien, giaoDien.graph.checkConnect());
 		}
 	}
 
