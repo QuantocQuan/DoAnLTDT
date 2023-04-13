@@ -26,25 +26,26 @@ public class Controller implements ActionListener {
 			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
 		}
 		if (ac.equals("AddEdge")) {
-
+			System.out.println("Ban bua nhan");
 			try {
 				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
-				String value = giaoDien.textFieldValue.getText();
+				int value = Integer.valueOf(giaoDien.textFieldValue.getText());
 
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
 					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex < " + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
-				}else
-				if(first == last) {
+				}else if(first == last) {
 					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add khuyen",
 							"Error", JOptionPane.ERROR_MESSAGE);
-				}else {
+				}else if(giaoDien.graph.mtk[first][last] != 0) {
 					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add canh song song",
 							"Error", JOptionPane.ERROR_MESSAGE);
-				}
+				}else {
 				giaoDien.graph.addEdges(first, last, value);
 				this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+				}
+				
 			} catch (NumberFormatException c) {
 				JOptionPane.showMessageDialog(giaoDien, "Invalid value", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -58,12 +59,13 @@ public class Controller implements ActionListener {
 				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
 					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex <" + giaoDien.graph.soDinh,
 							"Error", JOptionPane.ERROR_MESSAGE);
-				} else if (giaoDien.graph.condition(giaoDien.graph.mtk, first, last)) {
-					JOptionPane.showMessageDialog(giaoDien, "Edge to be deleted does not exist", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
+				}else if(giaoDien.graph.mtk[first][last] == 0) {
+					JOptionPane.showMessageDialog(giaoDien, "Canh khong ton tai",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}else {
 				giaoDien.graph.removeEdges(first, last);
 				this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+				}
 			} catch (NumberFormatException c) {
 				JOptionPane.showMessageDialog(giaoDien,
 						"The first and last vertices to be deleted cannot be left blank", "Error",
@@ -110,13 +112,7 @@ public class Controller implements ActionListener {
 						"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist(start));
 			}
 		}if(ac.equals("Check connect")) { 
-			if(giaoDien.graph.checkConnectStrongly()) {
-				JOptionPane.showMessageDialog(giaoDien,"Do thi lien thong manh");
-			}else if(giaoDien.graph.checkConnectWeekly()) {
-				JOptionPane.showMessageDialog(giaoDien,"Do thi lien thong yeu");
-			}else {
-				JOptionPane.showMessageDialog(giaoDien,"Do thi khong lien thong");
-			}
+			JOptionPane.showMessageDialog(giaoDien,giaoDien.graph.checkConnect());
 		}
 	}
 
