@@ -62,8 +62,11 @@ public class Graph {
 		for (int i = 0; i < mtk.length; i++) {
 			str += i + "    ";
 			for (int j = 0; j < mtk.length; j++) {
-
-				str += mtk[i][j] + "    ";
+                if(mtk[i][j] == 0) {
+				str += "∞"  + "    ";
+			}else {
+				str += mtk[i][j]  + "    ";
+			}
 			}
 			str += "\n";
 		}
@@ -114,14 +117,13 @@ public class Graph {
 		LinkedList<Edge> listEdge = new LinkedList<>();
 		// Khởi tạo kết quả là một StringBuffer và danh sách đỉnh sẽ duyệt
 		StringBuffer result = new StringBuffer();
-		LinkedList<Integer> lk = new LinkedList<>();
-		lk.add(startVertex);
+		Stack<Integer> stack = new Stack<>();
+		stack.add(startVertex);
 
 		// Bắt đầu duyệt đồ thị
-		while (!lk.isEmpty()) {
+		while (!stack.isEmpty()) {
 			// Lấy đỉnh cuối cùng trong danh sách đỉnh sẽ duyệt
-			int startCurrent = lk.getLast();
-			lk.removeLast();
+			int startCurrent = stack.pop();
 
 			// Nếu đỉnh chưa được duyệt thì đánh dấu và thêm vào kết quả
 			if (visited[startCurrent] == false) {
@@ -142,7 +144,7 @@ public class Graph {
 
 			// Thêm các đỉnh kề vào danh sách đỉnh sẽ duyệt tiếp theo
 			for (int i = listEdge.size() - 1; i >= 0; i--) {
-				lk.add(listEdge.get(i).dest);
+				stack.add(listEdge.get(i).dest);
 			}
 		}
 
@@ -158,15 +160,15 @@ public class Graph {
 		LinkedList<Edge> listEdge = new LinkedList<>();
 		// Khởi tạo kết quả là một StringBuffer và danh sách đỉnh sẽ duyệt
 		StringBuffer result = new StringBuffer();
-		LinkedList<Integer> lk = new LinkedList<>();
+		
 		int startVertex = findMin();
-		lk.add(startVertex);
+		Stack<Integer> stack = new Stack<>();
+		stack.add(startVertex);
 
 		// Bắt đầu duyệt đồ thị
-		while (!lk.isEmpty()) {
+		while (!stack.isEmpty()) {
 			// Lấy đỉnh cuối cùng trong danh sách đỉnh sẽ duyệt
-			int startCurrent = lk.getLast();
-			lk.removeLast();
+			int startCurrent = stack.pop();
 
 			// Nếu đỉnh chưa được duyệt thì đánh dấu và thêm vào kết quả
 			if (visited[startCurrent] == false) {
@@ -187,7 +189,7 @@ public class Graph {
 
 			// Thêm các đỉnh kề vào danh sách đỉnh sẽ duyệt tiếp theo
 			for (int i = listEdge.size() - 1; i >= 0; i--) {
-				lk.add(listEdge.get(i).dest);
+				stack.add(listEdge.get(i).dest);
 			}
 		}
 
@@ -231,6 +233,7 @@ public class Graph {
 
 			// Sắp xếp danh sách cạnh theo thứ tự giảm dần của trọng số
 			Collections.sort(listEdge);
+			System.out.println(listEdge);
 
 			// Thêm các đỉnh kề vào danh sách đỉnh sẽ duyệt tiếp theo
 			for (int i = 0; i < listEdge.size(); i++) {
@@ -406,6 +409,7 @@ public class Graph {
 			int degreeOut = degreeOutV(i);
 			if (degreeIn < 1 || degreeOut < 1) {
 				flag = false;
+				break;
 			}
 		}
 		if (count == soDinh && flag == true) {
@@ -429,12 +433,13 @@ public class Graph {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		Graph un1 = new Graph(
-				"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT\\MatrantrongsoDTCH.txt");
+				"E:\\test\\src\\MatrantrongsoDTCH.txt");
 		System.out.println(un1.printMatrix());
-		System.out.println(un1.BFSLinkedlist(4));
-		System.out.println(un1.DFSLinkkeList(4));
-		System.out.println(un1.BFSLinkedlist());
-		System.out.println(un1.DFSLinkkeList());
+		//System.out.println(un1.printMatrix());
+//		System.out.println(un1.BFSLinkedlist(0));
+	//	System.out.println(un1.DFSLinkkeList(0));
+//		System.out.println(un1.BFSLinkedlist());
+//		System.out.println(un1.DFSLinkkeList());
 		// System.out.println(un1.checkConnect());
 //		un1.addEdges(2, 0, 10);
 //		System.out.println(un1.printMatrix());
