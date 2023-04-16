@@ -1,4 +1,4 @@
-package Swing;
+package View;
 
 import java.awt.EventQueue;
 
@@ -7,9 +7,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
-
-import Function.Graph;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -31,6 +28,9 @@ import javax.swing.JFileChooser;
 import java.awt.ScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.Controller;
+import Model.Graph;
 
 public class View extends JFrame {
 

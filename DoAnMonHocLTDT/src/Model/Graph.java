@@ -1,4 +1,4 @@
-package Function;
+package Model;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +17,7 @@ public class Graph {
 	public String path;
 	boolean visited[];
 
-	// use path file to load matrix and vertex from file .txt
+
 	public Graph(String pathFile) throws NumberFormatException, IOException {
 		loadGraph(pathFile);
 		visited = new boolean[soDinh];
@@ -73,16 +73,10 @@ public class Graph {
 		return str;
 	}
 
-	/**
-	 * Add edges to graph i is the first vertex, j is the last vertex of the edge to
-	 * be added
-	 * 
-	 * @param i vertex i
-	 * @param j vertex j add edges connect i and j
-	 */
+	//thêm cạnh(i,j) và trọng số cạnh đó vào đồ thị, nếu cạnh(i,j) không phải là khuyên và không phải cạnh song song thì thêm
 	public void addEdges(int i, int j, int value) {
-		if (i != j) { // kh duoc add khuyen
-			if (mtk[i][j] == 0) { // kh dc add canh song song
+		if (i != j) { 
+			if (mtk[i][j] == 0) { 
 				if (i < soDinh && j < soDinh) {
 					mtk[i][j] = value;
 				}
@@ -90,26 +84,15 @@ public class Graph {
 		}
 	}
 
-	/**
-	 * remove edges to graph i is the first vertex, j is the last vertex of the edge
-	 * to be deleted
-	 * 
-	 * @param i vertex i
-	 * @param j vertex j
-	 */
+	//Xóa cạnh (i,j) của đồ thị, nếu i, j thuộc các đỉnh của đồ thị và cạnh (i,j) tồn tại trong đồ thị thì xóa
 	public void removeEdges(int i, int j) {
-		if (i < soDinh && j < soDinh && mtk[i][j] != 0) { // i and j must belong to the set of vertices of the
+		if (i < soDinh && j < soDinh && mtk[i][j] != 0) { 	
 			mtk[i][j] = 0;
 		}
 
 	}
 
-	/**
-	 * trùng đỉnh use DFS to scanning the graph
-	 * 
-	 * @param startVertex
-	 * @return
-	 */
+	//// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, có tham số truyền vào là đỉnh bắt đầu duyệt
 	public String DFSLinkkeList(int startVertex) {
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
@@ -152,7 +135,7 @@ public class Graph {
 		return result.toString();
 	}
 
-	
+	// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, đỉnh bắt đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
 	public String DFSLinkkeList() {
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
@@ -196,12 +179,7 @@ public class Graph {
 		// Trả về kết quả dưới dạng chuỗi
 		return result.toString();
 	}
-	/**
-	 * trùng đỉnh use BFS to scanning the graph
-	 * 
-	 * @param startVertex
-	 * @return
-	 */
+	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, có tham số truyền vào là đỉnh bắt đầu duyệt
 	public String BFSLinkedlist(int startVertex) {
 		for (int i = 0; i < this.soDinh; i++) {
 			visited[i] = false;
@@ -245,7 +223,7 @@ public class Graph {
 		// Trả về kết quả dưới dạng chuỗi
 		return result.toString();
 	}
-
+	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, đỉnh bắt đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
 	public String BFSLinkedlist() {
 		for (int i = 0; i < this.soDinh; i++) {
 			visited[i] = false;
@@ -290,7 +268,7 @@ public class Graph {
 		return result.toString();
 	}
 
-//	trả về đỉnh nhỏ nhất của cạnh nhỏ nhất trong ma trận 
+//	trả về đỉnh nhỏ nhất của cạnh có trọng số nhỏ nhất trong ma trận 
 	public int findMin() {
 		ArrayList<Edge> array = new ArrayList<>();
 		for (int i = 0; i < this.mtk.length; i++) {
@@ -306,7 +284,7 @@ public class Graph {
 
 	}
 
-	// TH1 nua bac ngoai cua dinh
+	//nửa bậc ngoài của đỉnh
 	public int degreeOutV(int v) {
 		int degree = 0;
 		for (int i = 0; i < mtk.length; i++) {
@@ -317,7 +295,7 @@ public class Graph {
 		return degree;
 	}
 
-	// TH2 nua bac trong cua dinh
+	//nửa bậc trong của đỉnh
 	public int degreeInV(int v) {
 		int degree = 0;
 		for (int i = 0; i < this.mtk.length; i++) {
@@ -328,7 +306,7 @@ public class Graph {
 		}
 		return degree;
 	}
-
+    //dùng DFS để duyệt qua tất cả các đỉnh của đồ thị, sau đó gán số đỉnh đã duyệt được vào biến count
 	public int DFSInt(int[][] mtk, int v) {
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
@@ -354,10 +332,7 @@ public class Graph {
 	}
 
 	/*
-	 * - kiem tra do thi lien thong yeu ý tưởng : chuyển đổi từ đồ thị có hướng hiện
-	 * tại thành đồ thị vô hướng, nếu đồ thị vô hướng mới chuyển đổi liên thông(dùng
-	 * - thuật toán dfs duyệt qua được tất cả các đỉnh)thì đồ thị có hướng ban đầu
-	 * liên thông yếu.
+	 * Kiểm tra đồ thị liên thông yếu: chuyển đổi từ đồ thị có hướng hiện tại thành đồ thị vô hướng, nếu đồ thị vô hướng mới chuyển đổi liên thông(dùng thuật toán dfs duyệt qua được tất cả các đỉnh)thì đồ thị có hướng ban đầu liên thông yếu.
 	 */
 	public boolean checkConnectWeekly() {
 		int[][] copy = new int[soDinh][soDinh];
@@ -370,12 +345,7 @@ public class Graph {
 		int count = 0;
 
 		revereseGraph(copy);
-		// chuyen do thi co huong hien tai thanh do thi vo huong
-		// printMatrix();
 		count = DFSInt(copy, 0);
-		// check xem do thi vo huong duoc chuyen tu do thi co huong co lien thong khong
-		// neu so dinh duoc duyet het thi do thi lien thong, nguoc lai thi khong lien
-		// thong
 		if (count == soDinh) {
 			re = true;
 		} else {
@@ -384,7 +354,7 @@ public class Graph {
 
 		return re;
 	}
-
+    // phương thức chuyển đồ thị có hướng thành vô hướng
 	public void revereseGraph(int[][] copy) {
 		int copy1[][] = this.mtk;
 		for (int i = 0; i < copy.length; i++) {
@@ -398,8 +368,7 @@ public class Graph {
 	}
 
 	// kiểm tra đồ thị liên thông mạnh
-	// ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị, nếu duyệt được hết
-	// tất cả các đỉnh thì đồ thị liên thông mạnh.
+	// ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị (1), nếu mọi đỉnh trong đồ thị đều có bậc của đỉnh ra và đỉnh vào > 1 (2) nếu thỏa 2 điều kiều kiên (1) và (2) thì đồ thị liên thông mạnh
 	public boolean checkConnectStrongly() {
 		boolean flag = true;
 		int count = 0;
@@ -418,7 +387,7 @@ public class Graph {
 			return false;
 		}
 	}
-
+   // kiểm tra tính liên thông của đồ thị : Nếu đồ thị trọng số, có hướng liên thông mạnh thì dừng, ngược lại thì sẽ kiểm tra liên thông yếu, nếu là liên thông yếu thì dừng, ngược lại thì là đồ thị không liên thông
 	public String checkConnect() {
 		String re = "";
 		if (checkConnectStrongly()) {

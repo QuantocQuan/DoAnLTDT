@@ -1,4 +1,4 @@
-package Swing;
+package Controller;
 
 import java.awt.event.ActionEvent;
 
@@ -9,7 +9,8 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import Function.Graph;
+import Model.Graph;
+import View.View;
 
 public class Controller implements ActionListener {
 	View giaoDien;

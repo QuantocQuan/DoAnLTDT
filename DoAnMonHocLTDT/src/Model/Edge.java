@@ -1,4 +1,4 @@
-package Function;
+package Model;
 
 public class Edge implements Comparable<Edge> {
 	int src;
