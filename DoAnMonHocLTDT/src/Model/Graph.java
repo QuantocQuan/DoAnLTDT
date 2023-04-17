@@ -17,7 +17,6 @@ public class Graph {
 	public String path;
 	boolean visited[];
 
-
 	public Graph(String pathFile) throws NumberFormatException, IOException {
 		loadGraph(pathFile);
 		visited = new boolean[soDinh];
@@ -54,29 +53,45 @@ public class Graph {
 	 * @return matrix
 	 */
 	public String printMatrix() {
-		String str = " ";
+		String str = "  ";
 		for (int i = 0; i < mtk.length; i++) {
-			str += "    " + i;
+			str += "     " + i;
 		}
 		str += "\n";
 		for (int i = 0; i < mtk.length; i++) {
-			str += i + "    ";
+			str += i + "      ";
 			for (int j = 0; j < mtk.length; j++) {
-                if(mtk[i][j] == 0) {
-				str += "∞"  + "    ";
-			}else {
-				str += mtk[i][j]  + "    ";
-			}
+				if (mtk[i][j] == 0) {
+					str += "*";
+				} else {
+					str += mtk[i][j];
+				}
+				int count = this.computeHowManyNumber(this.mtk[i][j]);
+				while(count < 6) {
+					str += " ";
+					count++;
+				}
 			}
 			str += "\n";
 		}
 		return str;
 	}
 
-	//thêm cạnh(i,j) và trọng số cạnh đó vào đồ thị, nếu cạnh(i,j) không phải là khuyên và không phải cạnh song song thì thêm
+	private int computeHowManyNumber(int number) {
+		int count = 0;
+		if(number == 0) return 1;
+		while (number >= 1) {
+			number = number / 10;
+			count++;
+		}
+		return count;
+	}
+
+	// thêm cạnh(i,j) và trọng số cạnh đó vào đồ thị, nếu cạnh(i,j) không phải là
+	// khuyên và không phải cạnh song song thì thêm
 	public void addEdges(int i, int j, int value) {
-		if (i != j) { 
-			if (mtk[i][j] == 0) { 
+		if (i != j) {
+			if (mtk[i][j] == 0) {
 				if (i < soDinh && j < soDinh) {
 					mtk[i][j] = value;
 				}
@@ -84,15 +99,17 @@ public class Graph {
 		}
 	}
 
-	//Xóa cạnh (i,j) của đồ thị, nếu i, j thuộc các đỉnh của đồ thị và cạnh (i,j) tồn tại trong đồ thị thì xóa
+	// Xóa cạnh (i,j) của đồ thị, nếu i, j thuộc các đỉnh của đồ thị và cạnh (i,j)
+	// tồn tại trong đồ thị thì xóa
 	public void removeEdges(int i, int j) {
-		if (i < soDinh && j < soDinh && mtk[i][j] != 0) { 	
+		if (i < soDinh && j < soDinh && mtk[i][j] != 0) {
 			mtk[i][j] = 0;
 		}
 
 	}
 
-	//// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, có tham số truyền vào là đỉnh bắt đầu duyệt
+	//// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, có
+	//// tham số truyền vào là đỉnh bắt đầu duyệt
 	public String DFSLinkkeList(int startVertex) {
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
@@ -135,7 +152,8 @@ public class Graph {
 		return result.toString();
 	}
 
-	// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, đỉnh bắt đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
+	// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, đỉnh bắt
+	// đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
 	public String DFSLinkkeList() {
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
@@ -143,7 +161,7 @@ public class Graph {
 		LinkedList<Edge> listEdge = new LinkedList<>();
 		// Khởi tạo kết quả là một StringBuffer và danh sách đỉnh sẽ duyệt
 		StringBuffer result = new StringBuffer();
-		
+
 		int startVertex = findMin();
 		Stack<Integer> stack = new Stack<>();
 		stack.add(startVertex);
@@ -179,7 +197,9 @@ public class Graph {
 		// Trả về kết quả dưới dạng chuỗi
 		return result.toString();
 	}
-	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, có tham số truyền vào là đỉnh bắt đầu duyệt
+
+	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, có tham
+	// số truyền vào là đỉnh bắt đầu duyệt
 	public String BFSLinkedlist(int startVertex) {
 		for (int i = 0; i < this.soDinh; i++) {
 			visited[i] = false;
@@ -223,7 +243,9 @@ public class Graph {
 		// Trả về kết quả dưới dạng chuỗi
 		return result.toString();
 	}
-	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, đỉnh bắt đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
+
+	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, đỉnh
+	// bắt đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
 	public String BFSLinkedlist() {
 		for (int i = 0; i < this.soDinh; i++) {
 			visited[i] = false;
@@ -280,11 +302,11 @@ public class Graph {
 		}
 		Collections.sort(array);
 		System.out.println(array);
-		return array.get(0).src ;
+		return array.get(0).src;
 
 	}
 
-	//nửa bậc ngoài của đỉnh
+	// nửa bậc ngoài của đỉnh
 	public int degreeOutV(int v) {
 		int degree = 0;
 		for (int i = 0; i < mtk.length; i++) {
@@ -295,7 +317,7 @@ public class Graph {
 		return degree;
 	}
 
-	//nửa bậc trong của đỉnh
+	// nửa bậc trong của đỉnh
 	public int degreeInV(int v) {
 		int degree = 0;
 		for (int i = 0; i < this.mtk.length; i++) {
@@ -306,7 +328,9 @@ public class Graph {
 		}
 		return degree;
 	}
-    //dùng DFS để duyệt qua tất cả các đỉnh của đồ thị, sau đó gán số đỉnh đã duyệt được vào biến count
+
+	// dùng DFS để duyệt qua tất cả các đỉnh của đồ thị, sau đó gán số đỉnh đã duyệt
+	// được vào biến count
 	public int DFSInt(int[][] mtk, int v) {
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
@@ -332,7 +356,10 @@ public class Graph {
 	}
 
 	/*
-	 * Kiểm tra đồ thị liên thông yếu: chuyển đổi từ đồ thị có hướng hiện tại thành đồ thị vô hướng, nếu đồ thị vô hướng mới chuyển đổi liên thông(dùng thuật toán dfs duyệt qua được tất cả các đỉnh)thì đồ thị có hướng ban đầu liên thông yếu.
+	 * Kiểm tra đồ thị liên thông yếu: chuyển đổi từ đồ thị có hướng hiện tại thành
+	 * đồ thị vô hướng, nếu đồ thị vô hướng mới chuyển đổi liên thông(dùng thuật
+	 * toán dfs duyệt qua được tất cả các đỉnh)thì đồ thị có hướng ban đầu liên
+	 * thông yếu.
 	 */
 	public boolean checkConnectWeekly() {
 		int[][] copy = new int[soDinh][soDinh];
@@ -354,7 +381,8 @@ public class Graph {
 
 		return re;
 	}
-    // phương thức chuyển đồ thị có hướng thành vô hướng
+
+	// phương thức chuyển đồ thị có hướng thành vô hướng
 	public void revereseGraph(int[][] copy) {
 		int copy1[][] = this.mtk;
 		for (int i = 0; i < copy.length; i++) {
@@ -368,7 +396,9 @@ public class Graph {
 	}
 
 	// kiểm tra đồ thị liên thông mạnh
-	// ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị (1), nếu mọi đỉnh trong đồ thị đều có bậc của đỉnh ra và đỉnh vào > 1 (2) nếu thỏa 2 điều kiều kiên (1) và (2) thì đồ thị liên thông mạnh
+	// ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị (1), nếu mọi đỉnh
+	// trong đồ thị đều có bậc của đỉnh ra và đỉnh vào > 1 (2) nếu thỏa 2 điều kiều
+	// kiên (1) và (2) thì đồ thị liên thông mạnh
 	public boolean checkConnectStrongly() {
 		boolean flag = true;
 		int count = 0;
@@ -387,7 +417,10 @@ public class Graph {
 			return false;
 		}
 	}
-   // kiểm tra tính liên thông của đồ thị : Nếu đồ thị trọng số, có hướng liên thông mạnh thì dừng, ngược lại thì sẽ kiểm tra liên thông yếu, nếu là liên thông yếu thì dừng, ngược lại thì là đồ thị không liên thông
+
+	// kiểm tra tính liên thông của đồ thị : Nếu đồ thị trọng số, có hướng liên
+	// thông mạnh thì dừng, ngược lại thì sẽ kiểm tra liên thông yếu, nếu là liên
+	// thông yếu thì dừng, ngược lại thì là đồ thị không liên thông
 	public String checkConnect() {
 		String re = "";
 		if (checkConnectStrongly()) {
@@ -401,12 +434,15 @@ public class Graph {
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
+		
+		
 		Graph un1 = new Graph(
-				"E:\\test\\src\\MatrantrongsoDTCH.txt");
-		System.out.println(un1.printMatrix());
-		//System.out.println(un1.printMatrix());
+				"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\LTDT\\DoAnLTDT\\DoAnMonHocLTDT\\DoThiLienThongYeu.txt");
+		String a = un1.printMatrix();
+		System.out.println(a);
+		// System.out.println(un1.printMatrix());
 //		System.out.println(un1.BFSLinkedlist(0));
-	//	System.out.println(un1.DFSLinkkeList(0));
+		// System.out.println(un1.DFSLinkkeList(0));
 //		System.out.println(un1.BFSLinkedlist());
 //		System.out.println(un1.DFSLinkkeList());
 		// System.out.println(un1.checkConnect());
