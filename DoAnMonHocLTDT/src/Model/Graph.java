@@ -53,7 +53,7 @@ public class Graph {
 	 * @return matrix
 	 */
 	public String printMatrix() {
-		String str = "  ";
+		String str = "   ";
 		for (int i = 0; i < mtk.length; i++) {
 			str += "     " + i;
 		}
@@ -62,13 +62,14 @@ public class Graph {
 			str += i + "      ";
 			for (int j = 0; j < mtk.length; j++) {
 				if (mtk[i][j] == 0) {
-					str += "*";
+					str += "0";
 				} else {
 					str += mtk[i][j];
 				}
-				int count = this.computeHowManyNumber(this.mtk[i][j]);
-				while(count < 6) {
-					str += " ";
+				int count = 2 * this.computeHowManyNumber(this.mtk[i][j]) - 1;
+
+				while (count < 6) {
+					str+=" ";
 					count++;
 				}
 			}
@@ -79,7 +80,8 @@ public class Graph {
 
 	private int computeHowManyNumber(int number) {
 		int count = 0;
-		if(number == 0) return 1;
+		if (number == 0)
+			return 1;
 		while (number >= 1) {
 			number = number / 10;
 			count++;
@@ -434,8 +436,7 @@ public class Graph {
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		
-		
+
 		Graph un1 = new Graph(
 				"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\LTDT\\DoAnLTDT\\DoAnMonHocLTDT\\DoThiLienThongYeu.txt");
 		String a = un1.printMatrix();

@@ -24,7 +24,10 @@ public class Controller implements ActionListener {
 		String ac = e.getActionCommand();
 
 		if (ac.equals("Show graph")) {
-			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+			String matrix = giaoDien.graph.printMatrix() ;
+			System.out.println(matrix);
+			giaoDien.textAreaMatrix.setText(matrix);
+			giaoDien.textAreaMatrix.setEditable(true);
 		}
 		if (ac.equals("AddEdge")) {
 			System.out.println("Ban bua nhan");
@@ -75,7 +78,7 @@ public class Controller implements ActionListener {
 		}
 		if (ac.equals("Choose file")) {
 			giaoDien.fileChooser = new JFileChooser(
-					"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT");
+					"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java");
 			int returnVal = giaoDien.fileChooser.showOpenDialog(giaoDien);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = giaoDien.fileChooser.getSelectedFile();
