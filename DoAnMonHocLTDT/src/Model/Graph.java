@@ -66,10 +66,14 @@ public class Graph {
 				} else {
 					str += mtk[i][j];
 				}
-				int count = 2 * this.computeHowManyNumber(this.mtk[i][j]) - 1;
+				int count;
+				if (mtk[i][j] != 0)
+					count = 2 * this.computeHowManyNumber(this.mtk[i][j]) - 1;
+				else
+					count = 2;
 
 				while (count < 6) {
-					str+=" ";
+					str += " ";
 					count++;
 				}
 			}
