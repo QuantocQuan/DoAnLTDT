@@ -57,12 +57,12 @@ public class Graph {
 		for (int i = 0; i < mtk.length; i++) {
 			str += "     " + i;
 		}
-		str += "\n";
+		str += "\n";	
 		for (int i = 0; i < mtk.length; i++) {
 			str += i + "      ";
 			for (int j = 0; j < mtk.length; j++) {
 				if (mtk[i][j] == 0) {
-					str += "*";
+					str += "∞";
 				} else {
 					str += mtk[i][j];
 				}
@@ -231,7 +231,6 @@ public class Graph {
 
 			// Sắp xếp danh sách cạnh theo thứ tự giảm dần của trọng số
 			Collections.sort(listEdge);
-			System.out.println(listEdge);
 
 			// Thêm các đỉnh kề vào danh sách đỉnh sẽ duyệt tiếp theo
 			for (int i = 0; i < listEdge.size(); i++) {
