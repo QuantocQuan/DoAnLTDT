@@ -2,6 +2,7 @@ package View;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -44,7 +46,7 @@ public class View extends JFrame {
 	public JLabel lblDinhCuoi;
 	public JFileChooser fileChooser;
 	public String pathFile;
-	public Graph graph ;
+	public Graph graph = new Graph() ;
 	public JRadioButton rdbtnDFS;
 	public JRadioButton rdbtnBFS;
 	public JTextField textFieldDinhChon;
@@ -52,6 +54,7 @@ public class View extends JFrame {
 	public  JLabel lblDinhBatDauDuyet;
 	public JButton btnDuyetDothi;
 	public JTextField textFieldValue;
+	private JButton btnSave;
 
 	/**
 	 * Launch the application.
@@ -87,6 +90,7 @@ public class View extends JFrame {
 	public void GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 574, 399);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -185,6 +189,10 @@ public class View extends JFrame {
 				btnAdd = new JButton("AddEdge");
 				btnAdd.setBounds(10, 149, 85, 21);
 				jPanelFunc.add(btnAdd);
+				
+				 btnSave = new JButton("Save");
+				btnSave.setBounds(227, 149, 85, 21);
+				jPanelFunc.add(btnSave);
 				btnAdd.addActionListener(controller);
 		
 		
@@ -204,5 +212,7 @@ public class View extends JFrame {
 		this.btnDuyetDothi.addActionListener(controller);
 		this.btnCheckConnect.addActionListener(controller);
 		this.btnSelectFile.addActionListener(controller);
+		this.btnSave.addActionListener(controller);
 	}
+	
 }

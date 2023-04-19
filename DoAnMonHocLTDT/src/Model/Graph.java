@@ -15,11 +15,14 @@ public class Graph {
 	public int soDinh;
 	public int[][] mtk;
 	public String path;
-	boolean visited[];
+	public boolean visited[];
 
 	public Graph(String pathFile) throws NumberFormatException, IOException {
 		loadGraph(pathFile);
 		visited = new boolean[soDinh];
+	}
+	public Graph() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -80,6 +83,19 @@ public class Graph {
 			str += "\n";
 		}
 		return str;
+	}
+	// ma trận của đồ thị sau khi được cập nhật dữ liệu
+	public String graphMaxtrix() {
+		StringBuffer str = new StringBuffer();
+		str.append(soDinh);
+		str.append("\n");
+		for (int i = 0; i < soDinh; i++) {
+			for (int j = 0; j < soDinh; j++) {
+			str.append(mtk[i][j] + " ");
+			}
+			str.append("\n");
+		}
+		return str.toString();
 	}
 
 	private int computeHowManyNumber(int number) {
@@ -305,7 +321,7 @@ public class Graph {
 			}
 		}
 		Collections.sort(array);
-		System.out.println(array);
+		//System.out.println(array);
 		return array.get(0).src;
 
 	}
@@ -400,8 +416,7 @@ public class Graph {
 	}
 
 	// kiểm tra đồ thị liên thông mạnh
-	// ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị (1), nếu mọi đỉnh
-	// trong đồ thị đều có bậc của đỉnh ra và đỉnh vào > 1 (2) nếu thỏa 2 điều kiều
+	// ý tưởng: sử dụng dfs duyệt qua tất cả các đỉnh của đồ thị (1), nếu mọi đỉnh  trong đồ thị đều có bậc của đỉnh ra và đỉnh vào > 1 (2) nếu thỏa 2 điều kiều
 	// kiên (1) và (2) thì đồ thị liên thông mạnh
 	public boolean checkConnectStrongly() {
 		boolean flag = true;
@@ -438,12 +453,11 @@ public class Graph {
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		
-		
 		Graph un1 = new Graph(
-				"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\LTDT\\DoAnLTDT\\DoAnMonHocLTDT\\DoThiLienThongYeu.txt");
-		String a = un1.printMatrix();
-		System.out.println(a);
+				"E:\\DoAnLTDT\\DoAnMonHocLTDT\\MatrantrongsoDTCH.txt");
+	       System.out.println(un1.graphMaxtrix());
+	       un1.removeEdges(0, 1);
+	       System.out.println(un1.graphMaxtrix());
 		// System.out.println(un1.printMatrix());
 //		System.out.println(un1.BFSLinkedlist(0));
 		// System.out.println(un1.DFSLinkkeList(0));

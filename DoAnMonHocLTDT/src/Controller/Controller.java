@@ -2,9 +2,15 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 
+
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.channels.UnsupportedAddressTypeException;
+import java.nio.file.FileSystemNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -74,13 +80,12 @@ public class Controller implements ActionListener {
 
 		}
 		if (ac.equals("Choose file")) {
-			giaoDien.fileChooser = new JFileChooser(
-					"C:\\Users\\ASUS\\OneDrive - st.hcmuaf.edu.vn\\MyCode\\Java\\DoAnLTDT\\DoAnLTDT\\DoAnLTDT\\DoAnMonHocLTDT");
+			giaoDien.fileChooser = new JFileChooser("C:\\Users\\DATA\\OneDrive\\Desktop\\DoThi");
 			int returnVal = giaoDien.fileChooser.showOpenDialog(giaoDien);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = giaoDien.fileChooser.getSelectedFile();
 				// This is where a real application would open the file.
-				System.out.println(file.toString());
+				System.out.println(file.getName());
 				giaoDien.pathFile = file.toString();
 				try {
 					giaoDien.graph = new Graph(giaoDien.pathFile);
@@ -94,6 +99,16 @@ public class Controller implements ActionListener {
 
 			}
 		}
+		if(ac.equals("Save")) {
+			
+				int returnVal = giaoDien.fileChooser.showSaveDialog(this.giaoDien);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = giaoDien.fileChooser.getSelectedFile();
+					save(file.getAbsolutePath());
+				} 
+			
+		}
+		
 		if (ac.equals("Graph browsing")) {
 			int start;
 			String strStart = giaoDien.textFieldDinhChon.getText();
@@ -122,6 +137,19 @@ public class Controller implements ActionListener {
 		}
 		if (ac.equals("Check connect")) {
 			JOptionPane.showMessageDialog(giaoDien, giaoDien.graph.checkConnect());
+		}
+	}
+	public void save(String fileName) {
+		try {
+			PrintWriter pw = new PrintWriter(fileName, "UTF-8");
+			String data = this.giaoDien.graph.graphMaxtrix();
+			pw.print(data);
+			pw.flush();
+			pw.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
 		}
 	}
 
