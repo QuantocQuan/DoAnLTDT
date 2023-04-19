@@ -100,7 +100,6 @@ public class Controller implements ActionListener {
 			}
 		}
 		if(ac.equals("Save")) {
-			
 				int returnVal = giaoDien.fileChooser.showSaveDialog(this.giaoDien);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = giaoDien.fileChooser.getSelectedFile();

@@ -451,13 +451,74 @@ public class Graph {
 		}
 		return re;
 	}
+	public void addVertex() {
+		int[][] temp = new int[soDinh][soDinh];
+		for (int i = 0; i < soDinh; i++) {
+			for (int j = 0; j < soDinh; j++) {
+				temp[i][j] = mtk[i][j];
+			}
+		}
+		mtk = new int[soDinh + 1][soDinh + 1];
+		for (int i = 0; i < soDinh; i++) {
+			for (int j = 0; j < soDinh; j++) {
+				mtk[i][j] = temp[i][j];
+			}
+		}
+		soDinh = soDinh +1;
+		
+	}
+
+	public void removeVertex(int vertex) {
+		int[][] temp = new int[soDinh][soDinh];
+		for (int i = 0; i < soDinh; i++) {
+			for (int j = 0; j < soDinh; j++) {
+				temp[i][j] = mtk[i][j];
+			}
+		}
+
+		int cot = vertex;
+		while(cot < (soDinh-1)) {
+			System.out.println(cot);
+		for (int i = 0; i < soDinh ; i++) {
+			temp[i][cot] = temp[i][cot+1];
+			
+		}
+		
+		cot++;
+	}
+		System.out.println("============");
+		int dong = vertex;
+		while(dong < (soDinh-1)) {
+			System.out.println(dong);
+		for (int i = 0; i < soDinh ; i++) {
+			temp[dong][i] = temp[dong+1][i];
+		}
+		
+		dong++;
+	}
+
+		mtk = new int[soDinh - 1][soDinh - 1];
+		for (int i = 0; i < mtk.length; i++) {
+			for (int j = 0; j < mtk.length; j++) {
+				mtk[i][j] = temp[i][j];
+			}
+		}
+		soDinh--;
+   
+	}
+	
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		Graph un1 = new Graph(
 				"E:\\DoAnLTDT\\DoAnMonHocLTDT\\MatrantrongsoDTCH.txt");
 	       System.out.println(un1.graphMaxtrix());
-	       un1.removeEdges(0, 1);
+	       un1.addVertex();
+	     //  System.out.println(un1.graphMaxtrix());
+	       un1.addEdges(0, 7, 10);
 	       System.out.println(un1.graphMaxtrix());
+	       un1.removeVertex(2);
+	       System.out.println(un1.graphMaxtrix());
+	      
 		// System.out.println(un1.printMatrix());
 //		System.out.println(un1.BFSLinkedlist(0));
 		// System.out.println(un1.DFSLinkkeList(0));
