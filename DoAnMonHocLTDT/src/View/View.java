@@ -55,6 +55,9 @@ public class View extends JFrame {
 	public JButton btnDuyetDothi;
 	public JTextField textFieldValue;
 	private JButton btnSave;
+	public JTextField textFieldThemDinh;
+	private JButton btnRemoveVertex;
+	private JButton btnAddVertex;
 
 	/**
 	 * Launch the application.
@@ -89,7 +92,7 @@ public class View extends JFrame {
 
 	public void GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 574, 399);
+		setBounds(100, 100, 650, 538);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -102,23 +105,23 @@ public class View extends JFrame {
 		jPanelFunc.setLayout(null);
 
 		btnCheckConnect = new JButton("Check connect");
-		btnCheckConnect.setBounds(379, 13, 134, 29);
+		btnCheckConnect.setBounds(459, 13, 134, 29);
 		jPanelFunc.add(btnCheckConnect);
 		lblDinhCuoi = new JLabel("Đỉnh cuối :");
 		lblDinhCuoi.setBounds(10, 91, 67, 18);
 		jPanelFunc.add(lblDinhCuoi);
 		
 		textFieldDinhChon = new JTextField();
-		textFieldDinhChon.setBounds(379, 59, 44, 19);
+		textFieldDinhChon.setBounds(514, 65, 44, 19);
 		jPanelFunc.add(textFieldDinhChon);
 		textFieldDinhChon.setColumns(10);
 		
 		 rdbtnDFS = new JRadioButton("DFS");
-		rdbtnDFS.setBounds(347, 94, 53, 21);
+		rdbtnDFS.setBounds(474, 103, 53, 21);
 		jPanelFunc.add(rdbtnDFS);
 		
 		 rdbtnBFS = new JRadioButton("BFS");
-		rdbtnBFS.setBounds(402, 94, 53, 21);
+		rdbtnBFS.setBounds(540, 103, 53, 21);
 		jPanelFunc.add(rdbtnBFS);
 		
 		ButtonGroup btnGroup = new ButtonGroup();
@@ -126,26 +129,26 @@ public class View extends JFrame {
 		btnGroup.add(rdbtnBFS);
 		
 		lblDuyetTheo = new JLabel("Duy\u1EC7t theo: ");
-		lblDuyetTheo.setBounds(256, 94, 85, 21);
+		lblDuyetTheo.setBounds(390, 103, 85, 21);
 		jPanelFunc.add(lblDuyetTheo);
 		
 		 lblDinhBatDauDuyet = new JLabel("\u0110\u1EC9nh b\u1EAFt \u0111\u1EA7u duy\u1EC7t: ");
-		lblDinhBatDauDuyet.setBounds(256, 57, 126, 23);
+		lblDinhBatDauDuyet.setBounds(390, 63, 114, 23);
 		jPanelFunc.add(lblDinhBatDauDuyet);
 		
 
 		textFieldFirst = new JTextField();
-		textFieldFirst.setBounds(87, 58, 37, 22);
+		textFieldFirst.setBounds(74, 58, 37, 22);
 		jPanelFunc.add(textFieldFirst);
 		textFieldFirst.setColumns(10);
 
 		textFieldLast = new JTextField();
-		textFieldLast.setBounds(87, 94, 37, 21);
+		textFieldLast.setBounds(74, 90, 37, 21);
 		jPanelFunc.add(textFieldLast);
 		textFieldLast.setColumns(10);
 
 		btnRemove = new JButton("RemoveEdge");
-		btnRemove.setBounds(105, 149, 96, 21);
+		btnRemove.setBounds(105, 149, 124, 21);
 		jPanelFunc.add(btnRemove);
 		btnRemove.addActionListener(controller);
 
@@ -158,7 +161,7 @@ public class View extends JFrame {
 		loadGraph.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 530, 156);
+		scrollPane.setBounds(10, 10, 606, 225);
 		loadGraph.add(scrollPane);
 				
 						textAreaMatrix = new JTextArea();
@@ -166,7 +169,7 @@ public class View extends JFrame {
 						textAreaMatrix.setEditable(false);
 
 		btnDuyetDothi = new JButton("Graph browsing");
-		btnDuyetDothi.setBounds(357, 121, 138, 21);
+		btnDuyetDothi.setBounds(455, 149, 138, 21);
 		jPanelFunc.add(btnDuyetDothi);
 		
 		textFieldValue = new JTextField();
@@ -179,11 +182,11 @@ public class View extends JFrame {
 		jPanelFunc.add(lblValue);
 		
 		btnSelectFile = new JButton("Choose file");
-		btnSelectFile.setBounds(36, 10, 124, 29);
+		btnSelectFile.setBounds(25, 13, 124, 29);
 		jPanelFunc.add(btnSelectFile);
 		
 		btnLoadGraph = new JButton("Show graph");
-		btnLoadGraph.setBounds(218, 12, 112, 27);
+		btnLoadGraph.setBounds(324, 14, 112, 27);
 		jPanelFunc.add(btnLoadGraph);
 		
 				btnAdd = new JButton("AddEdge");
@@ -191,17 +194,30 @@ public class View extends JFrame {
 				jPanelFunc.add(btnAdd);
 				
 				 btnSave = new JButton("Save");
-				btnSave.setBounds(227, 149, 85, 21);
+				btnSave.setBounds(181, 13, 114, 29);
 				jPanelFunc.add(btnSave);
+				
+				JLabel lblDinh = new JLabel("Đỉnh: ");
+				lblDinh.setBounds(10, 208, 44, 18);
+				jPanelFunc.add(lblDinh);
+				
+				textFieldThemDinh = new JTextField();
+				textFieldThemDinh.setBounds(49, 208, 37, 19);
+				jPanelFunc.add(textFieldThemDinh);
+				textFieldThemDinh.setColumns(10);
+				
+				 btnAddVertex = new JButton("Thêm đỉnh");
+				btnAddVertex.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				btnAddVertex.setBounds(230, 208, 124, 21);
+				jPanelFunc.add(btnAddVertex);
+				
+				 btnRemoveVertex = new JButton("Xóa đỉnh");
+				btnRemoveVertex.setBounds(105, 207, 106, 21);
+				jPanelFunc.add(btnRemoveVertex);
 				btnAdd.addActionListener(controller);
-		
-		
-		
-		 
-		
-		
-		
-
 		controller = new Controller(this);
 	}
 
@@ -213,6 +229,7 @@ public class View extends JFrame {
 		this.btnCheckConnect.addActionListener(controller);
 		this.btnSelectFile.addActionListener(controller);
 		this.btnSave.addActionListener(controller);
+		this.btnRemoveVertex.addActionListener(controller);
+		this.btnAddVertex.addActionListener(controller);
 	}
-	
 }

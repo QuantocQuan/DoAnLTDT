@@ -137,6 +137,20 @@ public class Controller implements ActionListener {
 		if (ac.equals("Check connect")) {
 			JOptionPane.showMessageDialog(giaoDien, giaoDien.graph.checkConnect());
 		}
+		if(ac.equals("Thêm đỉnh")) {
+			giaoDien.graph.addVertex();
+			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+		}
+		if(ac.equals("Xóa đỉnh")) {
+			int vex = Integer.parseInt(giaoDien.textFieldThemDinh.getText());
+			if(vex < giaoDien.graph.soDinh) {
+			giaoDien.graph.removeVertex(vex);
+			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+			}else {
+				JOptionPane.showMessageDialog(giaoDien, "Đỉnh không tồn tại" + giaoDien.graph.soDinh,
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	public void save(String fileName) {
 		try {

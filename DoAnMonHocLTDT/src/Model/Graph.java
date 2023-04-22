@@ -469,6 +469,7 @@ public class Graph {
 	}
 
 	public void removeVertex(int vertex) {
+		if(vertex < soDinh) {
 		int[][] temp = new int[soDinh][soDinh];
 		for (int i = 0; i < soDinh; i++) {
 			for (int j = 0; j < soDinh; j++) {
@@ -504,7 +505,9 @@ public class Graph {
 			}
 		}
 		soDinh--;
-   
+		}else {
+			System.out.println("Đỉnh không tồn tại để xóa");
+		}
 	}
 	
 
@@ -516,7 +519,7 @@ public class Graph {
 	     //  System.out.println(un1.graphMaxtrix());
 	       un1.addEdges(0, 7, 10);
 	       System.out.println(un1.graphMaxtrix());
-	       un1.removeVertex(2);
+	       un1.removeVertex(8);
 	       System.out.println(un1.graphMaxtrix());
 	      
 		// System.out.println(un1.printMatrix());
