@@ -16,6 +16,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import Model.Graph;
+import View.GraphPanel;
+import View.GraphPanelDFSAndBFS;
 import View.View;
 
 public class Controller implements ActionListener {
@@ -31,9 +33,14 @@ public class Controller implements ActionListener {
 
 		if (ac.equals("Show graph")) {
 			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+			String[] vertexLabels = new String[giaoDien.graph.soDinh];
+			for (int i = 0; i < vertexLabels.length; i++) {
+				vertexLabels[i] = ""+i;
+			}
+     		GraphPanel graphPanel = new GraphPanel(giaoDien.graph.mtk, vertexLabels);
+			giaoDien.hienThi(graphPanel);
 		}
 		if (ac.equals("AddEdge")) {
-			System.out.println("Ban bua nhan");
 			try {
 				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
@@ -56,6 +63,7 @@ public class Controller implements ActionListener {
 			} catch (NumberFormatException c) {
 				JOptionPane.showMessageDialog(giaoDien, "Invalid value", "Error", JOptionPane.ERROR_MESSAGE);
 			}
+			
 
 		}
 		if (ac.equals("RemoveEdge")) {
@@ -118,21 +126,46 @@ public class Controller implements ActionListener {
 				start = -1;
 			if (giaoDien.rdbtnDFS.isSelected()) {
 
-				if (start >= 0)
+				if (start >= 0) {
 					JOptionPane.showMessageDialog(giaoDien,
 							"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList(start));
-				else
+					String[] vertexLabels = new String[giaoDien.graph.soDinh];
+					for (int i = 0; i < vertexLabels.length; i++) {
+						vertexLabels[i] = ""+i;
+					}
+		     		GraphPanelDFSAndBFS graphPanel = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+					giaoDien.hienThiDFSOrBFS(graphPanel);
+				}else {
 					JOptionPane.showMessageDialog(giaoDien,
 							"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList());
-
+					String[] vertexLabels = new String[giaoDien.graph.soDinh];
+					for (int i = 0; i < vertexLabels.length; i++) {
+						vertexLabels[i] = ""+i;
+					}
+		     		GraphPanelDFSAndBFS graphPanel2 = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+					giaoDien.hienThiDFSOrBFS(graphPanel2);
+				}
 			} else if (giaoDien.rdbtnBFS.isSelected()) {
-				if (start >= 0)
+				if (start >= 0) {
 					JOptionPane.showMessageDialog(giaoDien,
 							"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist(start));
-				else
+				String[] vertexLabels = new String[giaoDien.graph.soDinh];
+				for (int i = 0; i < vertexLabels.length; i++) {
+					vertexLabels[i] = ""+i;
+				}
+	     		GraphPanelDFSAndBFS graphPanel3 = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+				giaoDien.hienThiDFSOrBFS(graphPanel3);
+			}else {
 					JOptionPane.showMessageDialog(giaoDien,
 							"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist());
+					String[] vertexLabels = new String[giaoDien.graph.soDinh];
+					for (int i = 0; i < vertexLabels.length; i++) {
+						vertexLabels[i] = ""+i;
+					}
+		     		GraphPanelDFSAndBFS graphPanel4 = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+					giaoDien.hienThiDFSOrBFS(graphPanel4);
 			}
+		}
 		}
 		if (ac.equals("Check connect")) {
 			JOptionPane.showMessageDialog(giaoDien, giaoDien.graph.checkConnect());

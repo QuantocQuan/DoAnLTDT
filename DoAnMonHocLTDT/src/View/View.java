@@ -54,10 +54,12 @@ public class View extends JFrame {
 	public  JLabel lblDinhBatDauDuyet;
 	public JButton btnDuyetDothi;
 	public JTextField textFieldValue;
-	private JButton btnSave;
+	public JButton btnSave;
 	public JTextField textFieldThemDinh;
-	private JButton btnRemoveVertex;
-	private JButton btnAddVertex;
+	public JButton btnRemoveVertex;
+	public JButton btnAddVertex;
+	public GraphPanel graphPanel;
+	public GraphPanelDFSAndBFS graphPanelDFSAndBFS;
 
 	/**
 	 * Launch the application.
@@ -161,7 +163,7 @@ public class View extends JFrame {
 		loadGraph.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 10, 606, 225);
+		scrollPane.setBounds(10, 10, 303, 225);
 		loadGraph.add(scrollPane);
 				
 						textAreaMatrix = new JTextArea();
@@ -231,5 +233,15 @@ public class View extends JFrame {
 		this.btnSave.addActionListener(controller);
 		this.btnRemoveVertex.addActionListener(controller);
 		this.btnAddVertex.addActionListener(controller);
+	}
+	public void hienThi(GraphPanel graphPanel) {
+		  this.graphPanel = graphPanel;	
+			loadGraph.add(this.graphPanel);
+			this.graphPanel.setBounds(323, 10, 393, 325);
+	}
+	public void hienThiDFSOrBFS(GraphPanelDFSAndBFS graphPanel) {
+		  this.graphPanelDFSAndBFS = graphPanel;	
+			loadGraph.add(this.graphPanelDFSAndBFS);
+			this.graphPanelDFSAndBFS.setBounds(323, 10, 393, 325);
 	}
 }

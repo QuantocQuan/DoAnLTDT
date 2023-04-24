@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -16,10 +17,11 @@ public class Graph {
 	public int[][] mtk;
 	public String path;
 	public boolean visited[];
+	public List<Integer> listReDFSOrBFS;
 
 	public Graph(String pathFile) throws NumberFormatException, IOException {
 		loadGraph(pathFile);
-		visited = new boolean[soDinh];
+		
 	}
 	public Graph() {
 		// TODO Auto-generated constructor stub
@@ -132,6 +134,8 @@ public class Graph {
 	//// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, có
 	//// tham số truyền vào là đỉnh bắt đầu duyệt
 	public String DFSLinkkeList(int startVertex) {
+		listReDFSOrBFS = new ArrayList<>();
+		visited = new boolean[soDinh];
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
 		}
@@ -150,6 +154,7 @@ public class Graph {
 			if (visited[startCurrent] == false) {
 				visited[startCurrent] = true;
 				result = result.append(startCurrent + " ");
+				listReDFSOrBFS.add(startCurrent);
 			}
 
 			// Tìm các cạnh kề với đỉnh hiện tại và chưa được duyệt
@@ -176,6 +181,8 @@ public class Graph {
 	// Duyệt theo chiều sâu, sử dụng danh sách liên kết(Stack), trùng đỉnh, đỉnh bắt
 	// đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
 	public String DFSLinkkeList() {
+		listReDFSOrBFS = new ArrayList<>();
+		visited = new boolean[soDinh];
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
 		}
@@ -196,6 +203,7 @@ public class Graph {
 			if (visited[startCurrent] == false) {
 				visited[startCurrent] = true;
 				result = result.append(startCurrent + " ");
+				listReDFSOrBFS.add(startCurrent);
 			}
 
 			// Tìm các cạnh kề với đỉnh hiện tại và chưa được duyệt
@@ -222,6 +230,8 @@ public class Graph {
 	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, có tham
 	// số truyền vào là đỉnh bắt đầu duyệt
 	public String BFSLinkedlist(int startVertex) {
+		listReDFSOrBFS = new ArrayList<>();
+		visited = new boolean[soDinh];
 		for (int i = 0; i < this.soDinh; i++) {
 			visited[i] = false;
 		}
@@ -240,6 +250,7 @@ public class Graph {
 			if (visited[startVex] == false) {
 				visited[startVex] = true;
 				result = result.append(startVex + " ");
+				listReDFSOrBFS.add(startVex);
 			}
 
 			// Tìm các cạnh kề với đỉnh hiện tại và chưa được duyệt
@@ -267,6 +278,8 @@ public class Graph {
 	// Duyệt theo chiều rộng, sử dụng danh sách liên kết(Queue), trùng đỉnh, đỉnh
 	// bắt đầu duyệt là đỉnh của cạnh có trọng số nhỏ nhất
 	public String BFSLinkedlist() {
+		listReDFSOrBFS = new ArrayList<>();
+		visited = new boolean[soDinh];
 		for (int i = 0; i < this.soDinh; i++) {
 			visited[i] = false;
 		}
@@ -286,6 +299,7 @@ public class Graph {
 			if (visited[startVex] == false) {
 				visited[startVex] = true;
 				result = result.append(startVex + " ");
+				listReDFSOrBFS.add(startVex);
 			}
 
 			// Tìm các cạnh kề với đỉnh hiện tại và chưa được duyệt
@@ -352,6 +366,7 @@ public class Graph {
 	// dùng DFS để duyệt qua tất cả các đỉnh của đồ thị, sau đó gán số đỉnh đã duyệt
 	// được vào biến count
 	public int DFSInt(int[][] mtk, int v) {
+		visited = new boolean[soDinh];
 		for (int i = 0; i < soDinh; i++) {
 			visited[i] = false;
 		}
@@ -464,7 +479,8 @@ public class Graph {
 				mtk[i][j] = temp[i][j];
 			}
 		}
-		soDinh = soDinh +1;
+		soDinh++;
+		
 		
 	}
 
@@ -479,7 +495,7 @@ public class Graph {
 
 		int cot = vertex;
 		while(cot < (soDinh-1)) {
-			System.out.println(cot);
+		
 		for (int i = 0; i < soDinh ; i++) {
 			temp[i][cot] = temp[i][cot+1];
 			
@@ -487,10 +503,9 @@ public class Graph {
 		
 		cot++;
 	}
-		System.out.println("============");
 		int dong = vertex;
 		while(dong < (soDinh-1)) {
-			System.out.println(dong);
+			
 		for (int i = 0; i < soDinh ; i++) {
 			temp[dong][i] = temp[dong+1][i];
 		}
@@ -515,12 +530,13 @@ public class Graph {
 		Graph un1 = new Graph(
 				"E:\\DoAnLTDT\\DoAnMonHocLTDT\\MatrantrongsoDTCH.txt");
 	       System.out.println(un1.graphMaxtrix());
-	       un1.addVertex();
+	      un1.addVertex(); 
+	    System.out.println(un1.checkConnect());
 	     //  System.out.println(un1.graphMaxtrix());
-	       un1.addEdges(0, 7, 10);
-	       System.out.println(un1.graphMaxtrix());
-	       un1.removeVertex(8);
-	       System.out.println(un1.graphMaxtrix());
+//	       un1.addEdges(0, 7, 10);
+//	       System.out.println(un1.graphMaxtrix());
+//	       un1.removeVertex(8);
+//	       System.out.println(un1.graphMaxtrix());
 	      
 		// System.out.println(un1.printMatrix());
 //		System.out.println(un1.BFSLinkedlist(0));
