@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 
@@ -8,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -24,6 +27,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JFileChooser;
@@ -40,26 +48,29 @@ public class View extends JFrame {
 	public JPanel contentPane, loadGraph, jPanelFunc;
 	public JTextArea textAreaMatrix;
 	public ActionListener controller;
-	public JTextField textFieldFirst;
-	public JTextField textFieldLast;
-	public JLabel lblDinhDau;
-	public JLabel lblDinhCuoi;
 	public JFileChooser fileChooser;
 	public String pathFile;
-	public Graph graph = new Graph() ;
+	
 	public JRadioButton rdbtnDFS;
 	public JRadioButton rdbtnBFS;
 	public JTextField textFieldDinhChon;
 	public JLabel lblDuyetTheo;
-	public  JLabel lblDinhBatDauDuyet;
+	public JLabel lblDinhBatDauDuyet;
 	public JButton btnDuyetDothi;
-	public JTextField textFieldValue;
 	public JButton btnSave;
-	public JTextField textFieldThemDinh;
 	public JButton btnRemoveVertex;
 	public JButton btnAddVertex;
 	public GraphPanel graphPanel;
 	public GraphPanelDFSAndBFS graphPanelDFSAndBFS;
+	public JTextField textFieldDinhXoa;
+	public JPanel panelDinhXoa;
+	public JLabel lblDinhXoa;
+	public JTextField textFieldLast;
+	public JTextField textFieldFirst;
+	public JLabel lblDinhDau;
+	public JLabel lblDinhCuoi;
+	public JLabel lblValue;
+	public JTextField textFieldValue;
 
 	/**
 	 * Launch the application.
@@ -106,121 +117,95 @@ public class View extends JFrame {
 		contentPane.add(jPanelFunc);
 		jPanelFunc.setLayout(null);
 
-		btnCheckConnect = new JButton("Check connect");
-		btnCheckConnect.setBounds(459, 13, 134, 29);
+		btnCheckConnect = new JButton("Kiểm tra liên thông");
+		btnCheckConnect.setBounds(459, 13, 157, 42);
 		jPanelFunc.add(btnCheckConnect);
-		lblDinhCuoi = new JLabel("Đỉnh cuối :");
-		lblDinhCuoi.setBounds(10, 91, 67, 18);
-		jPanelFunc.add(lblDinhCuoi);
-		
+
 		textFieldDinhChon = new JTextField();
-		textFieldDinhChon.setBounds(514, 65, 44, 19);
+		textFieldDinhChon.setBounds(511, 96, 44, 19);
 		jPanelFunc.add(textFieldDinhChon);
 		textFieldDinhChon.setColumns(10);
-		
-		 rdbtnDFS = new JRadioButton("DFS");
-		rdbtnDFS.setBounds(474, 103, 53, 21);
+
+		rdbtnDFS = new JRadioButton("DFS");
+		rdbtnDFS.setBounds(448, 121, 53, 21);
 		jPanelFunc.add(rdbtnDFS);
-		
-		 rdbtnBFS = new JRadioButton("BFS");
-		rdbtnBFS.setBounds(540, 103, 53, 21);
+
+		rdbtnBFS = new JRadioButton("BFS");
+		rdbtnBFS.setBounds(511, 121, 53, 21);
 		jPanelFunc.add(rdbtnBFS);
-		
+
 		ButtonGroup btnGroup = new ButtonGroup();
 		btnGroup.add(rdbtnDFS);
 		btnGroup.add(rdbtnBFS);
-		
+
 		lblDuyetTheo = new JLabel("Duy\u1EC7t theo: ");
-		lblDuyetTheo.setBounds(390, 103, 85, 21);
+		lblDuyetTheo.setBounds(368, 121, 85, 21);
 		jPanelFunc.add(lblDuyetTheo);
-		
-		 lblDinhBatDauDuyet = new JLabel("\u0110\u1EC9nh b\u1EAFt \u0111\u1EA7u duy\u1EC7t: ");
-		lblDinhBatDauDuyet.setBounds(390, 63, 114, 23);
+
+		lblDinhBatDauDuyet = new JLabel("\u0110\u1EC9nh b\u1EAFt \u0111\u1EA7u duy\u1EC7t: ");
+		lblDinhBatDauDuyet.setBounds(368, 92, 114, 23);
 		jPanelFunc.add(lblDinhBatDauDuyet);
-		
 
-		textFieldFirst = new JTextField();
-		textFieldFirst.setBounds(74, 58, 37, 22);
-		jPanelFunc.add(textFieldFirst);
-		textFieldFirst.setColumns(10);
-
-		textFieldLast = new JTextField();
-		textFieldLast.setBounds(74, 90, 37, 21);
-		jPanelFunc.add(textFieldLast);
-		textFieldLast.setColumns(10);
-
-		btnRemove = new JButton("RemoveEdge");
-		btnRemove.setBounds(105, 149, 124, 21);
+		btnRemove = new JButton("Xóa cạnh");
+		btnRemove.setBounds(134, 84, 114, 42);
 		jPanelFunc.add(btnRemove);
 		btnRemove.addActionListener(controller);
-
-		lblDinhDau = new JLabel("\u0110\u1EC9nh \u0111\u1EA7u:");
-		lblDinhDau.setBounds(10, 59, 76, 18);
-		jPanelFunc.add(lblDinhDau);
 
 		loadGraph = new JPanel();
 		contentPane.add(loadGraph);
 		loadGraph.setLayout(null);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 10, 303, 225);
 		loadGraph.add(scrollPane);
-				
-						textAreaMatrix = new JTextArea();
-						scrollPane.setViewportView(textAreaMatrix);
-						textAreaMatrix.setEditable(false);
 
-		btnDuyetDothi = new JButton("Graph browsing");
-		btnDuyetDothi.setBounds(455, 149, 138, 21);
+		textAreaMatrix = new JTextArea();
+		scrollPane.setViewportView(textAreaMatrix);
+		textAreaMatrix.setEditable(false);
+
+		btnDuyetDothi = new JButton("Duyệt đồ thị");
+		btnDuyetDothi.setBounds(441, 163, 114, 42);
 		jPanelFunc.add(btnDuyetDothi);
-		
-		textFieldValue = new JTextField();
-		textFieldValue.setBounds(64, 123, 96, 19);
-		jPanelFunc.add(textFieldValue);
-		textFieldValue.setColumns(10);
-		
-		JLabel lblValue = new JLabel("Value :");
-		lblValue.setBounds(10, 120, 44, 21);
-		jPanelFunc.add(lblValue);
-		
-		btnSelectFile = new JButton("Choose file");
-		btnSelectFile.setBounds(25, 13, 124, 29);
+
+		btnSelectFile = new JButton("Open File");
+		btnSelectFile.setBounds(10, 13, 114, 42);
 		jPanelFunc.add(btnSelectFile);
-		
-		btnLoadGraph = new JButton("Show graph");
-		btnLoadGraph.setBounds(324, 14, 112, 27);
+
+		btnLoadGraph = new JButton("Hiển thị");
+		btnLoadGraph.setBounds(317, 14, 114, 42);
 		jPanelFunc.add(btnLoadGraph);
-		
-				btnAdd = new JButton("AddEdge");
-				btnAdd.setBounds(10, 149, 85, 21);
-				jPanelFunc.add(btnAdd);
-				
-				 btnSave = new JButton("Save");
-				btnSave.setBounds(181, 13, 114, 29);
-				jPanelFunc.add(btnSave);
-				
-				JLabel lblDinh = new JLabel("Đỉnh: ");
-				lblDinh.setBounds(10, 208, 44, 18);
-				jPanelFunc.add(lblDinh);
-				
-				textFieldThemDinh = new JTextField();
-				textFieldThemDinh.setBounds(49, 208, 37, 19);
-				jPanelFunc.add(textFieldThemDinh);
-				textFieldThemDinh.setColumns(10);
-				
-				 btnAddVertex = new JButton("Thêm đỉnh");
-				btnAddVertex.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					}
-				});
-				btnAddVertex.setBounds(230, 208, 124, 21);
-				jPanelFunc.add(btnAddVertex);
-				
-				 btnRemoveVertex = new JButton("Xóa đỉnh");
-				btnRemoveVertex.setBounds(105, 207, 106, 21);
-				jPanelFunc.add(btnRemoveVertex);
-				btnAdd.addActionListener(controller);
+
+		btnAdd = new JButton("Thêm cạnh");
+		btnAdd.setBounds(10, 84, 114, 42);
+		jPanelFunc.add(btnAdd);
+
+		btnSave = new JButton("Save File");
+		btnSave.setBounds(168, 13, 114, 42);
+		jPanelFunc.add(btnSave);
+
+		btnAddVertex = new JButton("Thêm đỉnh");
+	
+		btnAddVertex.setBounds(10, 162, 114, 44);
+		jPanelFunc.add(btnAddVertex);
+
+		btnRemoveVertex = new JButton("Xóa đỉnh");
+		btnRemoveVertex.setBounds(134, 163, 114, 42);
+		jPanelFunc.add(btnRemoveVertex);
+
+		btnAdd.addActionListener(controller);
 		controller = new Controller(this);
+		textFieldDinhXoa = new JTextField();
+		lblDinhXoa = new JLabel("Nhập Đỉnh cần xóa: ");
+		
+		lblDinhDau = new JLabel("Nhập đỉnh đầu: ");
+		lblDinhCuoi = new JLabel("Nhập đỉnh cuối: ");
+		lblValue = new JLabel("Nhập trọng số: ");
+		textFieldFirst = new JTextField();
+		textFieldLast = new JTextField();
+		textFieldValue = new JTextField();
+		
+		
+		
 	}
 
 	public void addAction() {
@@ -236,8 +221,9 @@ public class View extends JFrame {
 	}
 	public void hienThi(GraphPanel graphPanel) {
 		  this.graphPanel = graphPanel;	
-			loadGraph.add(this.graphPanel);
+			loadGraph.add(this.graphPanel);	
 			this.graphPanel.setBounds(323, 10, 393, 325);
+			
 	}
 	public void hienThiDFSOrBFS(GraphPanelDFSAndBFS graphPanel) {
 		  this.graphPanelDFSAndBFS = graphPanel;	

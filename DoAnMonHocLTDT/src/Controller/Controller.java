@@ -22,6 +22,7 @@ import View.View;
 
 public class Controller implements ActionListener {
 	View giaoDien;
+    Graph graph = new Graph() ;
 
 	public Controller(View giaoDien) {
 		this.giaoDien = giaoDien;
@@ -31,63 +32,89 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String ac = e.getActionCommand();
 
-		if (ac.equals("Show graph")) {
-			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
-			String[] vertexLabels = new String[giaoDien.graph.soDinh];
+		if (ac.equals("Hiển thị")) {
+			this.giaoDien.textAreaMatrix.setText(graph.printMatrix());
+			String[] vertexLabels = new String[graph.soDinh];
 			for (int i = 0; i < vertexLabels.length; i++) {
 				vertexLabels[i] = ""+i;
 			}
-     		GraphPanel graphPanel = new GraphPanel(giaoDien.graph.mtk, vertexLabels);
+     		GraphPanel graphPanel = new GraphPanel(graph.mtk, vertexLabels);
 			giaoDien.hienThi(graphPanel);
 		}
-		if (ac.equals("AddEdge")) {
-			try {
-				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
-				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
-				int value = Integer.valueOf(giaoDien.textFieldValue.getText());
+		if (ac.equals("Thêm cạnh")) {
+				 try {
+					Object[] message = { giaoDien.lblDinhDau, giaoDien.textFieldFirst, giaoDien.lblDinhCuoi,
+							giaoDien.textFieldLast, giaoDien.lblValue, giaoDien.textFieldValue };
+					int option = JOptionPane.showConfirmDialog(null, message, "Thêm cạnh",
+							JOptionPane.OK_CANCEL_OPTION);
+					int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
+					int last = Integer.valueOf(giaoDien.textFieldLast.getText());
+					int value = Integer.valueOf(giaoDien.textFieldValue.getText());
+					if (option == JOptionPane.OK_OPTION) {
+						if (first < 0 || first >= graph.soDinh || last < 0 || last >= graph.soDinh) {
+							JOptionPane.showMessageDialog(giaoDien,
+									"Đỉnh phải nằm trong phạm vi từ 0 đến " + graph.soDinh, "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else if (first == last) {
+							JOptionPane.showMessageDialog(giaoDien, "Không được thêm khuyên", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else if (graph.mtk[first][last] != 0) {
+							JOptionPane.showMessageDialog(giaoDien, "Không được thêm cạnh song song", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							graph.addEdges(first, last, value);
+							this.giaoDien.textAreaMatrix.setText(graph.printMatrix());
+							String[] vertexLabels = new String[graph.soDinh];
+							for (int i = 0; i < vertexLabels.length; i++) {
+								vertexLabels[i] = ""+i;
+							}
+				     		GraphPanel graphPanel = new GraphPanel(graph.mtk, vertexLabels);
+							giaoDien.hienThi(graphPanel);
+						}
+						
 
-				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
-					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex < " + giaoDien.graph.soDinh,
-							"Error", JOptionPane.ERROR_MESSAGE);
-				} else if (first == last) {
-					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add khuyen", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} else if (giaoDien.graph.mtk[first][last] != 0) {
-					JOptionPane.showMessageDialog(giaoDien, "Khong duoc add canh song song", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-					giaoDien.graph.addEdges(first, last, value);
-					this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+					} 
+				} catch (Exception e2) {
+					System.out.println("");
 				}
-
-			} catch (NumberFormatException c) {
-				JOptionPane.showMessageDialog(giaoDien, "Invalid value", "Error", JOptionPane.ERROR_MESSAGE);
-			}
 			
 
 		}
-		if (ac.equals("RemoveEdge")) {
-			System.out.println("ban vua nhan ");
-			try {
-				int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
-				int last = Integer.valueOf(giaoDien.textFieldLast.getText());
-				if (first < 0 || first >= giaoDien.graph.soDinh || last < 0 || last >= giaoDien.graph.soDinh) {
-					JOptionPane.showMessageDialog(giaoDien, "You can only enter 0 <= vertex <" + giaoDien.graph.soDinh,
-							"Error", JOptionPane.ERROR_MESSAGE);
-				} else if (giaoDien.graph.mtk[first][last] == 0) {
-					JOptionPane.showMessageDialog(giaoDien, "Canh khong ton tai", "Error", JOptionPane.ERROR_MESSAGE);
-				} else {
-					giaoDien.graph.removeEdges(first, last);
-					this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+		if (ac.equals("Xóa cạnh")) {
+			
+				try {
+					Object[] message = { giaoDien.lblDinhDau, giaoDien.textFieldFirst, giaoDien.lblDinhCuoi,
+							giaoDien.textFieldLast };
+					int option = JOptionPane.showConfirmDialog(null, message, "Xóa cạnh",
+							JOptionPane.OK_CANCEL_OPTION);
+					int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
+					int last = Integer.valueOf(giaoDien.textFieldLast.getText());
+					if (option == JOptionPane.OK_OPTION) {
+						if (first < 0 || first >= graph.soDinh || last < 0 || last >= graph.soDinh) {
+							JOptionPane.showMessageDialog(giaoDien,
+									"Đỉnh phải nằm trong phạm vi từ 0 đến " + graph.soDinh, "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else if (graph.mtk[first][last] == 0) {
+							JOptionPane.showMessageDialog(giaoDien, "Cạnh không tồn tại", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							graph.removeEdges(first, last);
+							this.giaoDien.textAreaMatrix.setText(graph.printMatrix());
+							String[] vertexLabels = new String[graph.soDinh];
+							for (int i = 0; i < vertexLabels.length; i++) {
+								vertexLabels[i] = ""+i;
+							}
+				     		GraphPanel graphPanel = new GraphPanel(graph.mtk, vertexLabels);
+							giaoDien.hienThi(graphPanel);
+						}
+					} 
+				} catch (Exception e2) {
+					System.out.println("");
 				}
-			} catch (NumberFormatException c) {
-				JOptionPane.showMessageDialog(giaoDien,
-						"The first and last vertices to be deleted cannot be left blank", "Error",
-						JOptionPane.ERROR_MESSAGE);
-			}
-
 		}
-		if (ac.equals("Choose file")) {
+
+		
+		if (ac.equals("Open File")) {
 			giaoDien.fileChooser = new JFileChooser("C:\\Users\\DATA\\OneDrive\\Desktop\\DoThi");
 			int returnVal = giaoDien.fileChooser.showOpenDialog(giaoDien);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -96,7 +123,7 @@ public class Controller implements ActionListener {
 				System.out.println(file.getName());
 				giaoDien.pathFile = file.toString();
 				try {
-					giaoDien.graph = new Graph(giaoDien.pathFile);
+					graph = new Graph(giaoDien.pathFile);
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -107,7 +134,7 @@ public class Controller implements ActionListener {
 
 			}
 		}
-		if(ac.equals("Save")) {
+		if(ac.equals("Save File")) {
 				int returnVal = giaoDien.fileChooser.showSaveDialog(this.giaoDien);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = giaoDien.fileChooser.getSelectedFile();
@@ -116,7 +143,7 @@ public class Controller implements ActionListener {
 			
 		}
 		
-		if (ac.equals("Graph browsing")) {
+		if (ac.equals("Duyệt đồ thị")) {
 			int start;
 			String strStart = giaoDien.textFieldDinhChon.getText();
 			if (!strStart.equals(""))
@@ -128,67 +155,90 @@ public class Controller implements ActionListener {
 
 				if (start >= 0) {
 					JOptionPane.showMessageDialog(giaoDien,
-							"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList(start));
-					String[] vertexLabels = new String[giaoDien.graph.soDinh];
+							"Browse the graph by DFS: " +graph.DFSLinkkeList(start));
+					String[] vertexLabels = new String[graph.soDinh];
 					for (int i = 0; i < vertexLabels.length; i++) {
 						vertexLabels[i] = ""+i;
 					}
-		     		GraphPanelDFSAndBFS graphPanel = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+		     		GraphPanelDFSAndBFS graphPanel = new GraphPanelDFSAndBFS(graph.listReDFSOrBFS,graph.mtk, vertexLabels);
 					giaoDien.hienThiDFSOrBFS(graphPanel);
 				}else {
 					JOptionPane.showMessageDialog(giaoDien,
-							"Browse the graph by DFS: " + giaoDien.graph.DFSLinkkeList());
-					String[] vertexLabels = new String[giaoDien.graph.soDinh];
+							"Browse the graph by DFS: " + graph.DFSLinkkeList());
+					String[] vertexLabels = new String[graph.soDinh];
 					for (int i = 0; i < vertexLabels.length; i++) {
 						vertexLabels[i] = ""+i;
 					}
-		     		GraphPanelDFSAndBFS graphPanel2 = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+		     		GraphPanelDFSAndBFS graphPanel2 = new GraphPanelDFSAndBFS(graph.listReDFSOrBFS,graph.mtk, vertexLabels);
 					giaoDien.hienThiDFSOrBFS(graphPanel2);
 				}
 			} else if (giaoDien.rdbtnBFS.isSelected()) {
 				if (start >= 0) {
 					JOptionPane.showMessageDialog(giaoDien,
-							"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist(start));
-				String[] vertexLabels = new String[giaoDien.graph.soDinh];
+							"Browse the graph by BFS: " + graph.BFSLinkedlist(start));
+				String[] vertexLabels = new String[graph.soDinh];
 				for (int i = 0; i < vertexLabels.length; i++) {
 					vertexLabels[i] = ""+i;
 				}
-	     		GraphPanelDFSAndBFS graphPanel3 = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+	     		GraphPanelDFSAndBFS graphPanel3 = new GraphPanelDFSAndBFS(graph.listReDFSOrBFS,graph.mtk, vertexLabels);
 				giaoDien.hienThiDFSOrBFS(graphPanel3);
 			}else {
 					JOptionPane.showMessageDialog(giaoDien,
-							"Browse the graph by BFS: " + giaoDien.graph.BFSLinkedlist());
-					String[] vertexLabels = new String[giaoDien.graph.soDinh];
+							"Browse the graph by BFS: " +graph.BFSLinkedlist());
+					String[] vertexLabels = new String[graph.soDinh];
 					for (int i = 0; i < vertexLabels.length; i++) {
 						vertexLabels[i] = ""+i;
 					}
-		     		GraphPanelDFSAndBFS graphPanel4 = new GraphPanelDFSAndBFS(giaoDien.graph.listReDFSOrBFS,giaoDien.graph.mtk, vertexLabels);
+		     		GraphPanelDFSAndBFS graphPanel4 = new GraphPanelDFSAndBFS(graph.listReDFSOrBFS,graph.mtk, vertexLabels);
 					giaoDien.hienThiDFSOrBFS(graphPanel4);
 			}
 		}
 		}
-		if (ac.equals("Check connect")) {
-			JOptionPane.showMessageDialog(giaoDien, giaoDien.graph.checkConnect());
+		if (ac.equals("Kiểm tra liên thông")) {
+			JOptionPane.showMessageDialog(giaoDien, graph.checkConnect());
 		}
 		if(ac.equals("Thêm đỉnh")) {
-			giaoDien.graph.addVertex();
-			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
+			graph.addVertex();
+			this.giaoDien.textAreaMatrix.setText(graph.printMatrix());
+			String[] vertexLabels = new String[graph.soDinh];
+			for (int i = 0; i < vertexLabels.length; i++) {
+				vertexLabels[i] = ""+i;
+			}
+     		GraphPanel graphPanel = new GraphPanel(graph.mtk, vertexLabels);
+			giaoDien.hienThi(graphPanel);
 		}
 		if(ac.equals("Xóa đỉnh")) {
-			int vex = Integer.parseInt(giaoDien.textFieldThemDinh.getText());
-			if(vex < giaoDien.graph.soDinh) {
-			giaoDien.graph.removeVertex(vex);
-			this.giaoDien.textAreaMatrix.setText(giaoDien.graph.printMatrix());
-			}else {
-				JOptionPane.showMessageDialog(giaoDien, "Đỉnh không tồn tại" + giaoDien.graph.soDinh,
-						"Error", JOptionPane.ERROR_MESSAGE);
+			 try {
+				Object[] message = { giaoDien.lblDinhXoa, giaoDien.textFieldDinhXoa };
+				int option = JOptionPane.showConfirmDialog(null, message, "Xóa Đỉnh", JOptionPane.OK_CANCEL_OPTION);
+				int vex = Integer.parseInt(giaoDien.textFieldDinhXoa.getText());
+				if (option == JOptionPane.OK_OPTION) {
+					if (vex <graph.soDinh) {
+						graph.removeVertex(vex);
+						JOptionPane.showMessageDialog(giaoDien, "Xóa Đỉnh thành công ");
+						this.giaoDien.textAreaMatrix.setText(graph.printMatrix());
+						String[] vertexLabels = new String[graph.soDinh];
+						for (int i = 0; i < vertexLabels.length; i++) {
+							vertexLabels[i] = ""+i;
+						}
+			     		GraphPanel graphPanel = new GraphPanel(graph.mtk, vertexLabels);
+						giaoDien.hienThi(graphPanel);
+					} else {
+						JOptionPane.showMessageDialog(giaoDien, "Đỉnh không tồn tại", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} 
+			} catch (Exception e2) {
+				System.out.println("");
 			}
 		}
+		
+		
 	}
 	public void save(String fileName) {
 		try {
 			PrintWriter pw = new PrintWriter(fileName, "UTF-8");
-			String data = this.giaoDien.graph.graphMaxtrix();
+			String data = graph.graphMaxtrix();
 			pw.print(data);
 			pw.flush();
 			pw.close();

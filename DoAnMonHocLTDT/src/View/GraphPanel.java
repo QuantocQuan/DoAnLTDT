@@ -2,6 +2,8 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class GraphPanel extends JPanel {
 			}
 		}
         for (Point p:points) {
-        	g.setColor(Color.BLUE);
+        	g.setColor(Color.YELLOW);
 			g.fillOval(p.getX(), p.getY(), sizeVertex,sizeVertex);
 			g.setColor(Color.black);
 			g.drawString(p.getLable(),p.getX()+3, p.getY()+11);
@@ -107,4 +109,5 @@ public class GraphPanel extends JPanel {
     	f.setContentPane(p);
     	f.setVisible(true);
     }
+
 }	
