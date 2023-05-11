@@ -87,7 +87,7 @@ public class GraphPanelDFSAndBFS extends JPanel {
 			}
 		}
         for (Point p:points) {
-        	g.setColor(Color.BLUE);
+        	g.setColor(Color.YELLOW);
 			g.fillOval(p.getX(), p.getY(), sizeVertex,sizeVertex);
 			g.setColor(Color.black);
 			g.drawString(p.getLable(),p.getX()+3, p.getY()+11);
