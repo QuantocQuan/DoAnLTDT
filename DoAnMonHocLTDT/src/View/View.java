@@ -200,9 +200,9 @@ public class View extends JFrame {
 		lblDinhDau = new JLabel("Nhập đỉnh đầu: ");
 		lblDinhCuoi = new JLabel("Nhập đỉnh cuối: ");
 		lblValue = new JLabel("Nhập trọng số: ");
-		textFieldFirst = new JTextField();
-		textFieldLast = new JTextField();
-		textFieldValue = new JTextField();
+		textFieldFirst = new JTextField(5);
+		textFieldLast = new JTextField(5);
+		textFieldValue = new JTextField(5);
 		
 		
 		

@@ -1,5 +1,6 @@
 package Controller;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 
@@ -14,6 +15,7 @@ import java.nio.file.FileSystemNotFoundException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import Model.Graph;
 import View.GraphPanel;
@@ -43,9 +45,17 @@ public class Controller implements ActionListener {
 		}
 		if (ac.equals("Thêm cạnh")) {
 				 try {
-					Object[] message = { giaoDien.lblDinhDau, giaoDien.textFieldFirst, giaoDien.lblDinhCuoi,
-							giaoDien.textFieldLast, giaoDien.lblValue, giaoDien.textFieldValue };
-					int option = JOptionPane.showConfirmDialog(null, message, "Thêm cạnh",
+					 GridLayout gridLayout = new GridLayout(3,3);
+						gridLayout.setVgap(10);
+						JPanel jPanel = new JPanel(gridLayout);
+						jPanel.add(giaoDien.lblDinhDau);
+						jPanel.add(giaoDien.textFieldFirst);
+						jPanel.add(giaoDien.lblDinhCuoi);
+						jPanel.add(giaoDien.textFieldLast);
+						jPanel.add(giaoDien.lblValue);
+						jPanel.add(giaoDien.textFieldValue);
+				
+					int option = JOptionPane.showConfirmDialog(null, jPanel, "Thêm cạnh",
 							JOptionPane.OK_CANCEL_OPTION);
 					int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 					int last = Integer.valueOf(giaoDien.textFieldLast.getText());
@@ -83,9 +93,15 @@ public class Controller implements ActionListener {
 		if (ac.equals("Xóa cạnh")) {
 			
 				try {
-					Object[] message = { giaoDien.lblDinhDau, giaoDien.textFieldFirst, giaoDien.lblDinhCuoi,
-							giaoDien.textFieldLast };
-					int option = JOptionPane.showConfirmDialog(null, message, "Xóa cạnh",
+					GridLayout gridLayout = new GridLayout(2,2);
+					gridLayout.setVgap(10);
+					JPanel jPanel = new JPanel(gridLayout);
+					jPanel.add(giaoDien.lblDinhDau);
+					jPanel.add(giaoDien.textFieldFirst);
+					jPanel.add(giaoDien.lblDinhCuoi);
+					jPanel.add(giaoDien.textFieldLast);
+
+					int option = JOptionPane.showConfirmDialog(null, jPanel, "Xóa cạnh",
 							JOptionPane.OK_CANCEL_OPTION);
 					int first = Integer.valueOf(giaoDien.textFieldFirst.getText());
 					int last = Integer.valueOf(giaoDien.textFieldLast.getText());
@@ -209,8 +225,12 @@ public class Controller implements ActionListener {
 		}
 		if(ac.equals("Xóa đỉnh")) {
 			 try {
-				Object[] message = { giaoDien.lblDinhXoa, giaoDien.textFieldDinhXoa };
-				int option = JOptionPane.showConfirmDialog(null, message, "Xóa Đỉnh", JOptionPane.OK_CANCEL_OPTION);
+					 GridLayout gridLayout = new GridLayout(1,1);	
+						JPanel jPanel = new JPanel(gridLayout);
+						jPanel.add(giaoDien.lblDinhXoa);
+						jPanel.add(giaoDien.textFieldDinhXoa);
+			
+				int option = JOptionPane.showConfirmDialog(null, jPanel, "Xóa Đỉnh", JOptionPane.OK_CANCEL_OPTION);
 				int vex = Integer.parseInt(giaoDien.textFieldDinhXoa.getText());
 				if (option == JOptionPane.OK_OPTION) {
 					if (vex <graph.soDinh) {
